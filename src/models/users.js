@@ -1,3 +1,4 @@
+const {v4 : uuidv4} = require('uuid')
 const db = require('../config/db')
 
 const getAllUsers = ()=>{
@@ -33,11 +34,13 @@ const getDetailUser = (id)=>{
     })
 }
 
-const SignUp = (body)=>{
+const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
-        const { displayname, email, password, phone} = body
-        const sqlQuery = "INSERT INTO users (displayname, email, password, phone) VALUES($1, $2, $3, $4) RETURNING displayname, email, phone"
-        db.query(sqlQuery, [displayname, email, password, phone])
+        const id = uuidv4()
+        const timeStamp = new Date(Date.now())
+        const { displayname, email, phone} = body
+        const sqlQuery = "INSERT INTO users (id, displayname, email, password, phone, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING displayname, email, phone"
+        db.query(sqlQuery, [id, displayname, email, hashPassword, phone, timeStamp])
         .then((result)=>{
             const response = {
                 data : result.rows,
@@ -48,6 +51,27 @@ const SignUp = (body)=>{
             reject(err)
         })
     })
+}
+
+const getUserByEmail = (email)=>{
+    return new Promise((resolve, reject)=>{
+        const sqlQuery = "SELECT * FROM users WHERE email = $1"
+        db.query(sqlQuery, [email]).then((result)=>{
+            resolve(result)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+const getPassByEmail = async(email)=>{
+    try {
+        const result = await db.query('SELECT id, displayname, password FROM users WHERE email = $1', [email])
+        if(result.rowCount === 0) throw {status : 400, err : {msg : "email is not registered"}}
+        return result.rows[0]
+    } catch (error) {
+        throw {error}
+    }
 }
 
 const editUser = (id, body)=>{
@@ -89,5 +113,7 @@ module.exports = {
     getDetailUser,
     SignUp,
     editUser,
-    deleteUser
+    deleteUser,
+    getUserByEmail,
+    getPassByEmail
 }

@@ -29,7 +29,19 @@ const searchProduct = (query)=>{
             sqlQuery += " and lower (categories) like lower ('%' || $2 || '%')"
         }
         if(order){
-            sqlQuery += " order by " + sort + " " + order
+            if(sort === "price"){
+                sqlQuery += ` order by price`
+            }
+            if(sort === "created_at"){
+                sqlQuery += ` order by created_at`
+            }
+            if(order === "asc"){
+                sqlQuery += ` asc`
+            }
+            if(order === "desc"){
+                sqlQuery += ` desc`
+            }
+            //  " order by " + sort + " " + order
         }
 
         db.query(sqlQuery, arr).then((result)=>{
@@ -40,6 +52,7 @@ const searchProduct = (query)=>{
             }
             resolve(response)
         }).catch((err)=>{
+            console.log(err);
             reject(err)
         })
     })
@@ -79,7 +92,7 @@ const getSingleProduct = (id)=>{
 
 const createProduct = (body)=>{
     return new Promise((resolve, reject)=>{
-        const {name, descriptions, price, pictures, categories, sizes, created_at, updated_at} = body
+        const {name, descriptions, price, pictures, categories, sizes, created_at,} = body
         const sqlQuery = "INSERT INTO products (name, descriptions, price, pictures, categories, sizes, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
         db.query(sqlQuery, [name, descriptions, price, pictures, categories, sizes, created_at])
         .then((result)=>{
