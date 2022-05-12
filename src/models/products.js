@@ -1,4 +1,4 @@
-
+const {v4 : uuidv4} = require('uuid')
 const db = require('../config/db')
 
 const favoritProduct = ()=>{
@@ -58,11 +58,14 @@ const searchProduct = (query)=>{
     })
 }
 
-const getAllProduct = ()=>{
+const getAllProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-        db.query('SELECT * FROM products')
+        const {page = 1, limit = 3} = query
+        const offset = (Number(page-1) * Number(limit))
+        db.query('SELECT * FROM products LIMIT $1 OFFSET $2', [limit, offset])
         .then((result)=>{
             const response = {
+                total : result.rowCount,
                 data : result.rows,
                 err : null
             }
@@ -92,9 +95,11 @@ const getSingleProduct = (id)=>{
 
 const createProduct = (body)=>{
     return new Promise((resolve, reject)=>{
-        const {name, descriptions, price, pictures, categories, sizes, created_at,} = body
-        const sqlQuery = "INSERT INTO products (name, descriptions, price, pictures, categories, sizes, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
-        db.query(sqlQuery, [name, descriptions, price, pictures, categories, sizes, created_at])
+        const id = uuidv4()
+        const created_at = new Date(Date.now())
+        const {name, descriptions, price, pictures, category_id, sizes,} = body
+        const sqlQuery = "INSERT INTO products (id, name, descriptions, price, pictures, category_id, sizes, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *"
+        db.query(sqlQuery, [id, name, descriptions, price, pictures, category_id, sizes, created_at])
         .then((result)=>{
             const response = {
                 data : result.rows,

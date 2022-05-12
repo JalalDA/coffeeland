@@ -1,23 +1,17 @@
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const {succesResponse, errorResponse} = require('../helpers/response')
 
 const userModels = require('../models/users')
-const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser, getPassByEmail} = userModels
+const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser} = userModels
 
 const getAllUser = (req, res)=>{
-    getAllUsers()
+    getAllUsers(req.query)
     .then((result)=>{
-        res.status(200).json({
-            data : result.data,
-            err : null
-        })
+        succesResponse(res, 200, "Succes get all data", result.data, result.total)
     })
     .catch((err)=>{
         console.log(err);
-        res.status(400).json({
-            data : null,
-            err
-        })
+        errorResponse(res, 400, {msg : err}, err)
     })
 }
 
@@ -45,9 +39,7 @@ const Register = async (req, res)=>{
     const hashPassword = await bcrypt.hash(password, salt)
     try {
         await SignUp(req.body, hashPassword)
-        res.status(201).json({
-            msg : "Register Berhasil"
-        })
+        succesResponse(res, 200, "Register Succes!!!")
     } catch (error) {
         console.log(error);
         res.status(400).json({
@@ -69,34 +61,14 @@ const Register = async (req, res)=>{
     // })
 }
 
-const Login = async (req, res)=>{
-    try {
-        const {email, password} = req.body
-        const data = await getPassByEmail(email)
-        console.log(data);
-        const result = await bcrypt.compare(password, data.password)
-        if(!result) return res.status(400).json({
-            msg : "Wrong email or password"
-        })
-        const payload = {
-            id : data.id,
-            displayname : data.displayname
-        }
-        // eslint-disable-next-line no-undef
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn : "20s"
-        })
-        res.status(200).json({
-            data : payload,
-            token
-        })
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            error
-        })
-    }
-}
+
+
+// const Logout = async(req, res)=>{
+//     const id = req.params.id
+//     const token = req.cookies.token
+//     if(!token) return res.sendStatus(204)
+//     const user = await getDetailUser(id)
+// }
 
 const updateUser = (req, res)=>{
     const id = req.params.id
@@ -136,5 +108,4 @@ module.exports = {
     Register,
     updateUser,
     deleteSingleUser,
-    Login
 }

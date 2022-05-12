@@ -1,15 +1,15 @@
 const response = {}
 
-response.succesResponse = (res, msg, data, total) =>{
-    res.status(200).json({
+response.succesResponse = (res, status, msg, data, total) =>{
+    res.status(status).json({
         msg,
         total,
         data
     })
 }
 
-response.errorResponse = (res, msg, data, err) =>{
-    res.status(400).json({
+response.errorResponse = (res, status, msg, data, err) =>{
+    res.status(status).json({
         msg,
         data,
         err

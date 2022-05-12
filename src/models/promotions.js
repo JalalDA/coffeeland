@@ -1,8 +1,11 @@
 const db = require('../config/db')
+const {v4 : uuidv4} = require('uuid')
 
-const getAllPromotion = ()=>{
+const getAllPromotion = (query)=>{
     return new Promise((resolve, reject)=>{
-        db.query("SELECT * FROM promotions").then((result)=>{
+        const {page =1, limit = 3} = query
+        const offset = (Number(page)-1) * Number(limit)
+        db.query("SELECT * FROM promotions LIMIT $1 OFFSET $2", [limit, offset]).then((result)=>{
             const response = {
                 total : result.rowCount,
                 data : result.rows,
@@ -34,9 +37,10 @@ const searchPromo = (query)=>{
 
 const createPromo = (body)=>{
     return new Promise((resolve, reject)=>{
+        const id = uuidv4()
         const {code, expiredtime, starttime, discount} = body
-        const sqlQuery = "INSERT INTO promotions(code, expiredtime, starttime, discount) VALUES ($1, $2, $3, $4) RETURNING *"
-        db.query(sqlQuery, [code, expiredtime, starttime, discount])
+        const sqlQuery = "INSERT INTO promotions(id, code, expiredtime, starttime, discount) VALUES ($1, $2, $3, $4, $5) RETURNING *"
+        db.query(sqlQuery, [id, code, expiredtime, starttime, discount])
         .then((result)=>{
             const response = {
                 msg : "promo has been created",

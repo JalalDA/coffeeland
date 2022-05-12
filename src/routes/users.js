@@ -2,11 +2,11 @@ const express = require('express')
 const Router = express.Router()
 
 const userController = require('../controllers/users')
+const {verifyToken, chekDuplicateEmail} = require('../middleware/auth')
 
-Router.get('/all', userController.getAllUser)
+Router.get('/all', verifyToken, userController.getAllUser)
 Router.get('/:id', userController.getDetailUserController)
-Router.post('/signup', userController.Register )
-Router.post('/login', userController.Login)
+Router.post('/signup', chekDuplicateEmail,userController.Register )
 Router.patch('/:id', userController.updateUser)
 Router.delete('/:id', userController.deleteSingleUser)
 
