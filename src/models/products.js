@@ -21,12 +21,12 @@ const favoritProduct = ()=>{
 
 const searchProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-        const {name, order, sort, categories } =query
+       let {name, order, sort, category_id, page = 1, limit = 3  } = query
         const arr = [name]
         let sqlQuery = "select * from products where lower (name) like lower ('%' || $1 || '%')"
-        if(categories){
-            arr.push(categories)
-            sqlQuery += " and lower (categories) like lower ('%' || $2 || '%')"
+        if(category_id){
+            arr.push(category_id)
+            sqlQuery += " and category_id=$2"
         }
         if(order){
             if(sort === "price"){
@@ -41,11 +41,29 @@ const searchProduct = (query)=>{
             if(order === "desc"){
                 sqlQuery += ` desc`
             }
-            //  " order by " + sort + " " + order
+            // sqlQuery += " order by " + sort + " " + order
         }
-
+        if(!page){
+            page += 1
+        }
+        if(!limit){
+            limit += 2
+        }
+        if(page){
+            arr.push(limit)
+            sqlQuery += " limit $3"
+        }
+        const offset = (Number(page-1)) * limit
+        if(limit){
+            arr.push(offset)
+            sqlQuery += " offset $4"
+        }
         db.query(sqlQuery, arr).then((result)=>{
             const response = {
+                limit,
+                sort,
+                order,
+                category_id,
                 total : result.rowCount,
                 data : result.rows,
                 err : null
@@ -60,17 +78,27 @@ const searchProduct = (query)=>{
 
 const getAllProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-        const {page = 1, limit = 3} = query
-        const offset = (Number(page-1) * Number(limit))
+        // let page = query.page = 1
+        // let limit = query.limit = 3
+        let {page, limit} = query
+        if(!page){
+            page = 1
+        }
+        if(!limit){
+            limit = 3
+        }
+        const offset = (Number(page- 1)) * Number(limit)
         db.query('SELECT * FROM products LIMIT $1 OFFSET $2', [limit, offset])
         .then((result)=>{
             const response = {
+                limit,
                 total : result.rowCount,
                 data : result.rows,
                 err : null
             }
             resolve(response)
         }).catch((err)=>{
+            console.log(err);
             reject(err)
         })
     })

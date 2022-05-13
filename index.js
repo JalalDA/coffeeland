@@ -8,6 +8,7 @@ const port = 8000
     db.connect().then(()=>{
         const mainRouter = require('./src/routes/index') 
         console.log(`Database connected`);
+        App.use(express.static('public'))
         App.use(express.json())
         App.use(express.urlencoded({extended:false}))
         App.use(cookieParser())

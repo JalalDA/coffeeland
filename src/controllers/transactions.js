@@ -1,20 +1,46 @@
+const db = require('../config/db')
 const modelsTransaction = require('../models/transactions')
 const {getAllTransaction, createTransaction, updateTransaction, getSingelTransaction, deleteTransaction} = modelsTransaction
 
 
-const getAllTransactions = (req, res)=>{
-    getAllTransaction().then((result)=>{
+const getAllTransactions = async (req, res)=>{
+    try {
+        const result = await getAllTransaction(req.query)
+        const limit = result.limit
+        const totalData = await db.query("select count(*) as total_transaction from transactions")
+        const {total_transaction} = totalData.rows[0]
+        const totalTransaction = Number(total_transaction)
+        const totalPage = Math.ceil(totalTransaction/Number(limit))
+        let curentPage =Number(req.query.page) 
+        if(!curentPage)  {curentPage =1}
+        let nextPage = `/transaction/all?page=${curentPage + 1}&limit=${limit}`
+        if(curentPage === totalPage){nextPage=`This is the last page`}
+        let previousPage = `/transaction/all?page=${curentPage - 1}&limit=${limit}`
+        if(curentPage === 1){previousPage = `This is the first page`}
         res.status(200).json({
-            total : result.total,
+            msg : "Show all transaction",
+            totalTransaction,
+            totalPage,
+            curentPage,
+            nextPage,
+            previousPage,
             data : result.data,
-            err : null
         })
-    }).catch((err)=>{
-        res.status(400).json({
-            err,
-            data : []
-        })
-    })
+    } catch (error) {
+        console.log(error);
+    }
+    // getAllTransaction().then((result)=>{
+    //     res.status(200).json({
+    //         total : result.total,
+    //         data : result.data,
+    //         err : null
+    //     })
+    // }).catch((err)=>{
+    //     res.status(400).json({
+    //         err,
+    //         data : []
+    // //     })
+    // })
 }
 
 const getDetailTransaction = (req, res) =>{

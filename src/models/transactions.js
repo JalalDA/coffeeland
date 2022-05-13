@@ -1,9 +1,14 @@
 const db = require('../config/db')
 
-const getAllTransaction = ()=>{
+const getAllTransaction = (query)=>{
     return new Promise((resolve, reject)=>{
-        db.query("SELECT * FROM transactions").then((result)=>{
+        let {page, limit} = query
+        if(!page) {page = 1}
+        if(!limit) {limit = 2}
+        const offset = (Number(page)-1) * Number(limit)
+        db.query("SELECT * FROM transactions LIMIT $1 OFFSET $2", [limit, offset]).then((result)=>{
             const response = {
+                limit,
                 total : result.rowCount,
                 data : result.rows,
                 err : null

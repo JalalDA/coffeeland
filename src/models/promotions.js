@@ -3,14 +3,19 @@ const {v4 : uuidv4} = require('uuid')
 
 const getAllPromotion = (query)=>{
     return new Promise((resolve, reject)=>{
-        const {page =1, limit = 3} = query
-        const offset = (Number(page)-1) * Number(limit)
+        let {page =1, limit = 2} = query
+        if(!page){page = 1}
+        if(!limit){limit = 2}
+        let offset = (Number(page)-1) * Number(limit)
+        console.log(offset);
         db.query("SELECT * FROM promotions LIMIT $1 OFFSET $2", [limit, offset]).then((result)=>{
             const response = {
+                limit,
                 total : result.rowCount,
                 data : result.rows,
                 err : null
             }
+            console.log(offset);
             resolve(response)
         }).catch((err)=>{
             reject(err)
@@ -20,16 +25,22 @@ const getAllPromotion = (query)=>{
 
 const searchPromo = (query)=>{
     return new Promise((resolve, reject)=>{
-        const {code} = query
-        const sqlQuery = "select * from promotions where lower (code) like lower ('%' || $1 || '%')"
-        db.query(sqlQuery, [code]).then((result)=>{
+        let {code, page, limit} = query
+        if(!page){page = 1}
+        if(!limit) {limit = 2}
+        const offset = Number(page -1) * Number(limit)
+        const sqlQuery = "select * from promotions where lower (code) like lower ('%' || $1 || '%') limit $2 offset $3"
+        db.query(sqlQuery, [code, limit, offset]).then((result)=>{
             const response = {
+                code,
+                limit,
                 total : result.rowCount,
                 data : result.rows,
                 err : null
             }
             resolve(response)
         }).catch((err)=>{
+            console.log(err);
             reject(err)
         })
     })

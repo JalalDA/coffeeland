@@ -1,18 +1,26 @@
 const bcrypt = require('bcrypt')
 const {succesResponse, errorResponse} = require('../helpers/response')
+const db = require('../config/db')
 
 const userModels = require('../models/users')
 const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser} = userModels
 
-const getAllUser = (req, res)=>{
-    getAllUsers(req.query)
-    .then((result)=>{
-        succesResponse(res, 200, "Succes get all data", result.data, result.total)
-    })
-    .catch((err)=>{
-        console.log(err);
-        errorResponse(res, 400, {msg : err}, err)
-    })
+const getAllUser = async (req, res)=>{
+    try {
+        const result = await getAllUsers(req.query)
+        const total = await db.query('select count(*) as totaldata from users')
+        const totalData = total.rows[0].totaldata
+        const limit = result.limit
+        const totalPage = Math.ceil(totalData / limit)
+        res.status(200).json({
+            msg : 'Succes get all data',
+            totalData,
+            totalPage,
+            data : result.data
+        })
+    } catch (error) {
+        errorResponse(res, 400, 'Failed to get all data')
+    }
 }
 
 const getDetailUserController = (req, res)=>{

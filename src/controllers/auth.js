@@ -26,41 +26,20 @@ const Login = async (req, res)=>{
     try {
         const {email, password} = req.body
         const data = await getPassByEmail(email)
-        console.log(data);
         const result = await bcrypt.compare(password, data.password)
         if(!result) return res.status(400).json({
             msg : "Wrong email or password"
         })
-        const payload = {
-            id : data.id,
-            displayname : data.displayname
-        }
         // eslint-disable-next-line no-undef
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn : "1d"
         })
         localstorage.setItem('token', token)
-        console.log(localstorage.getItem('token'));
-        // eslint-disable-next-line no-undef
-        // const refresh_token = jwt.sign(payload, process.env.REFRESH_TOKEN,{
-        //     expiresIn : "1d"
-        // })
-        // await db.query("update users set token = $1 where id = $2", [token, payload.id])
-        // res.cookie('token', token, {
-        //     httpOnly : true,
-        //     maxAge : 24 * 60 * 60 * 1000
-        // })
-        succesResponse(res, 200, "Login Succes", {payload, token})
-        // res.status(200).json({
-        //     data : payload,
-        //     token
-        // })
+        const {id, displayname} = data
+        succesResponse(res, 200, "Login Succes", {id, displayname, token})
     } catch (error) {
         console.log(error);
         errorResponse(res, 400, "Login Failed", {error})
-        // res.status(400).json({
-        //     error
-        // })
     }
 }
 

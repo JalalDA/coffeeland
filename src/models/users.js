@@ -1,6 +1,5 @@
 const {v4 : uuidv4} = require('uuid')
 const db = require('../config/db')
-const jwt = require('jsonwebtoken')
 
 const getAllUsers = (query)=>{
     return new Promise((resolve, reject)=>{
@@ -9,6 +8,7 @@ const getAllUsers = (query)=>{
         db.query('SELECT id, displayname, phone, email from users LIMIT $1 OFFSET $2', [Number(limit), offset])
         .then((result)=>{
             const response = {
+                limit,
                 total : result.rowCount,
                 data : result.rows
             }
@@ -42,12 +42,8 @@ const SignUp = (body, hashPassword)=>{
         const id = uuidv4()
         const timeStamp = new Date(Date.now())
         const { displayname, email, phone} = body
-        // eslint-disable-next-line no-undef
-        const refresh_token = jwt.sign({displayname, email, phone}, process.env.JWT_SECRET, {
-            expiresIn : "1d"
-        })
-        const sqlQuery = "INSERT INTO users (id, displayname, email, password, phone, created_at, refresh_token) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING displayname, email, phone"
-        db.query(sqlQuery, [id, displayname, email, hashPassword, phone, timeStamp, refresh_token])
+        const sqlQuery = "INSERT INTO users (id, displayname, email, password, phone, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING displayname, email, phone"
+        db.query(sqlQuery, [id, displayname, email, hashPassword, phone, timeStamp])
         .then((result)=>{
             const response = {
                 data : result.rows,
