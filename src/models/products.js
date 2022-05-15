@@ -121,11 +121,12 @@ const getSingleProduct = (id)=>{
     })
 }
 
-const createProduct = (body)=>{
+const createProduct = (body, file)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
+        const pictures = file? file.path.replace('public', '').replace(/\\/g, '/') : null
         const created_at = new Date(Date.now())
-        const {name, descriptions, price, pictures, category_id, sizes,} = body
+        const {name, descriptions, price, category_id, sizes,} = body
         const sqlQuery = "INSERT INTO products (id, name, descriptions, price, pictures, category_id, sizes, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *"
         db.query(sqlQuery, [id, name, descriptions, price, pictures, category_id, sizes, created_at])
         .then((result)=>{
@@ -135,17 +136,19 @@ const createProduct = (body)=>{
             }
             resolve(response)
         }).catch((err)=>{
+            console.log(file);
             console.log(err);
             reject(err)
         })
     })
 }
 
-const updateProduct = (id, body)=>{
+const updateProduct = (id, file, body)=>{
     return new Promise((resolve, reject)=>{
-        const {name, descriptions, price, pictures, categories, sizes, updated_at} = body
-        const sqlQuery = "UPDATE products SET name = COALESCE(NULLIF($2, ''), name), descriptions = COALESCE(NULLIF($3, ''), descriptions),  price = COALESCE(NULLIF($4, '')::integer, price), pictures = COALESCE(NULLIF($5, ''), pictures), categories = COALESCE(NULLIF($6, ''), categories), sizes = COALESCE(NULLIF($7, ''), sizes), updated_at = COALESCE(NULLIF($8, '')::timestamp, updated_at) WHERE id = $1 RETURNING*"
-        db.query(sqlQuery, [id, name, descriptions, price, pictures, categories, sizes, updated_at])
+        const pictures = file? file.path.replace('public', '').replace(/\\/g, '/') : null
+        const {name, descriptions, price, category_id, sizes, updated_at} = body
+        const sqlQuery = "UPDATE products SET name = COALESCE(NULLIF($2, ''), name), descriptions = COALESCE(NULLIF($3, ''), descriptions),  price = COALESCE(NULLIF($4, '')::integer, price), pictures = COALESCE(NULLIF($5, ''), pictures), category_id = COALESCE(NULLIF($6, ''), category_id), sizes = COALESCE(NULLIF($7, ''), sizes), updated_at = COALESCE(NULLIF($8, '')::timestamp, updated_at) WHERE id = $1 RETURNING*"
+        db.query(sqlQuery, [id, name, descriptions, price, pictures, category_id, sizes, updated_at])
         .then((result)=>{
             const response = {
                 data : result.rows,

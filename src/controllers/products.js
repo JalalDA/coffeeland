@@ -111,13 +111,15 @@ const getAllProducts = async (req, res)=>{
     }
 }
 const getProductById = (req, res)=>{
-    getSingleProduct(req.params.id)
+    const id = req.params.id
+    getSingleProduct(id)
     .then((result)=>{
         if(!result.data) return res.status(404).json({
             msg : "Data not found!!!"
         })
         res.status(200).json({
-            data : result.data,
+            msg : `Show data with id ${id}`,
+            data : result.data[0],
             err : null
         })
     })
@@ -129,22 +131,27 @@ const getProductById = (req, res)=>{
     })
 }
 
-const insertProduct = (req, res)=>{
-    createProduct(req.body).then((result)=>{
+const insertProduct = async (req, res)=>{
+    try {
+        const {file = null} = req
+        const result = await createProduct(req.body, file)
         succesResponse(res, 200, "Proudct created", result.data)
-        // res.status(200).json({
-        //     msg : "Product created",
-        //     data : result.data,
-        //     err : null
-        // })
-    }).catch((err)=>{
-        errorResponse(res, 400, "Failed to create product", {err})
-    })
+    } catch (error) {
+        console.log(req.file);
+        errorResponse(res, 400, 'Cannot create product', error)
+        console.log(error);
+    }
+    // createProduct(req.body).then((result)=>{
+    // succesResponse(res, 200, "Proudct created", result.data)
+    // }).catch((err)=>{
+    //     errorResponse(res, 400, "Failed to create product", {err})
+    // })
 }
 const editProduct = (req, res)=>{
     const id = req.params.id
     const body = req.body
-    updateProduct(id, body).then((result)=>{
+    const {file = null} = req
+    updateProduct(id, file,  body).then((result)=>{
         res.status(200).json({
             data : result.data,
             err : null

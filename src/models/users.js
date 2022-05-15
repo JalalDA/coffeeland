@@ -1,11 +1,31 @@
 const {v4 : uuidv4} = require('uuid')
 const db = require('../config/db')
 
+const updateUserUpload = (id, file, body )=>{
+    return new Promise((resolve, reject)=>{
+        const {display_name, phone, email, firstname, lastname, birthday, gender} = body
+        let photo = file? file.path.replace('public', '').replace(/\\/g, '/') : null
+        const updated_at = new Date(Date.now())
+        const sqlQuery = "UPDATE users SET display_name = COALESCE(NULLIF($2, ''), display_name), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender), updated_at = COALESCE(NULLIF($10, '')::timestamp, updated_at)  WHERE id = $1 RETURNING display_name, phone, email, photo, firstname, lastname, birthday, gender, updated_at"
+        db.query(sqlQuery, [id, display_name, phone, email, photo, firstname, lastname, birthday, gender, updated_at]).then((result)=>{
+            console.log(photo);
+            const response = {
+                msg : "Update succes",
+                data : result.rows[0]
+            }
+            resolve(response)
+        }).catch((err)=>{
+            reject(err)
+            console.log(err);
+        })
+    })
+}
+
 const getAllUsers = (query)=>{
     return new Promise((resolve, reject)=>{
         const {page = 1, limit = 3} = query
         const offset = (Number(page) -1 ) * Number(limit)
-        db.query('SELECT id, displayname, phone, email from users LIMIT $1 OFFSET $2', [Number(limit), offset])
+        db.query('SELECT id, display_name, phone, email from users LIMIT $1 OFFSET $2', [Number(limit), offset])
         .then((result)=>{
             const response = {
                 limit,
@@ -21,7 +41,7 @@ const getAllUsers = (query)=>{
 
 const getDetailUser = (id)=>{
     return new Promise((resolve, reject)=>{
-        const sqlQuery = 'SELECT id, displayname, phone, email, photo FROM users WHERE id = $1'
+        const sqlQuery = 'SELECT id, display_name, phone, email, photo FROM users WHERE id = $1'
         db.query(sqlQuery, [id])
         .then((result)=>{
             const response = {
@@ -41,12 +61,12 @@ const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
         const timeStamp = new Date(Date.now())
-        const { displayname, email, phone} = body
-        const sqlQuery = "INSERT INTO users (id, displayname, email, password, phone, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING displayname, email, phone"
-        db.query(sqlQuery, [id, displayname, email, hashPassword, phone, timeStamp])
+        const { display_name, email, phone} = body
+        const sqlQuery = "INSERT INTO users (id, display_name, email, password, phone, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING display_name, email, phone"
+        db.query(sqlQuery, [id, display_name, email, hashPassword, phone, timeStamp])
         .then((result)=>{
             const response = {
-                data : result.rows,
+                data : result.rows[0],
                 err : null
             }
             resolve(response)
@@ -69,7 +89,7 @@ const getUserByEmail = (email)=>{
 
 const getPassByEmail = async(email)=>{
     try {
-        const result = await db.query('SELECT id, displayname, password FROM users WHERE email = $1', [email])
+        const result = await db.query('SELECT id, display_name, password FROM users WHERE email = $1', [email])
         if(result.rowCount === 0) throw {status : 400, err : {msg : "email is not registered"}}
         return result.rows[0]
     } catch (error) {
@@ -77,12 +97,15 @@ const getPassByEmail = async(email)=>{
     }
 }
 
+
 const editUser = (id, body)=>{
     return new Promise((resolve, reject)=>{
-        const {displayname, phone, email, photo, firstname, lastname, birthday, gender} = body
-        const sqlQuery = "UPDATE users SET displayname = COALESCE(NULLIF($2, ''), displayname), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender)  WHERE id = $1 RETURNING displayname, phone, email, photo, firstname, lastname, birthday, gender"
-        db.query(sqlQuery, [id, displayname, phone, email, photo, firstname, lastname, birthday, gender])
+        const {display_name, phone, email, photo, firstname, lastname, birthday, gender} = body
+        const sqlQuery = "UPDATE users SET display_name = COALESCE(NULLIF($2, ''), display_name), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender)  WHERE id = $1 RETURNING displayname, phone, email, photo, firstname, lastname, birthday, gender"
+        db.query(sqlQuery, [id, display_name, phone, email, photo, firstname, lastname, birthday, gender])
         .then((result)=>{
+            console.log(id);
+            console.log(result);
             const response = {
                 data : result.rows,
                 err : null 
@@ -97,7 +120,7 @@ const editUser = (id, body)=>{
 
 const deleteUser = (id)=>{
     return new Promise((resolve, reject)=>{
-        const sqlQuery = "DELETE FROM users WHERE id = $1 RETURNING displayname, phone, email, photo"
+        const sqlQuery = "DELETE FROM users WHERE id = $1 RETURNING display_name, phone, email, photo"
         db.query(sqlQuery, [id])
         .then((result)=>{
             const response = {
@@ -111,6 +134,7 @@ const deleteUser = (id)=>{
         })
     })
 }
+
 module.exports = {
     getAllUsers,
     getDetailUser,
@@ -118,5 +142,6 @@ module.exports = {
     editUser,
     deleteUser,
     getUserByEmail,
-    getPassByEmail
+    getPassByEmail,
+    updateUserUpload
 }
