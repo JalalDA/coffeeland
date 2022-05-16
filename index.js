@@ -1,11 +1,12 @@
 require('dotenv').config();
 const express = require('express')
-const App = express();
+
 const cookieParser = require('cookie-parser')
 const {connection} = require('./src/config/db')
-const port = 8000
 connection()
-const mainRouter = require('./src/routes/index') 
+const port = 8000
+const App = express();
+const mainRouter = require('./src/routes/index')
     App.use(express.static('public'))
     App.use(express.json())
     App.use(express.urlencoded({extended:false}))
