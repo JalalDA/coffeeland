@@ -35,7 +35,7 @@ const Login = async (req, res)=>{
             expiresIn : "1d"
         })
         console.log(data);
-        localstorage.setItem('token', token)
+        localstorage.setItem(`token${data.id}`, token)
         const {id, displayname} = data
         succesResponse(res, 200, "Login Succes", {id, displayname, token})
     } catch (error) {
@@ -46,12 +46,22 @@ const Login = async (req, res)=>{
 
 const Logout = async(req, res)=>{
     try {
-        const oldtoken = localstorage.getItem('token')
-        if(!oldtoken) return errorResponse(res, 400, "You are not sign in")
+    const bearerToken = req.header('Authorization')
+    if(!bearerToken) return res.status(403).json({
+        msg : "You need to sign in"
+    })
+    const oldtoken = bearerToken.split(" ")[1]
+    // eslint-disable-next-line no-undef
+    jwt.verify(oldtoken, process.env.JWT_SECRET, (err, data)=>{
+        if(err) res.status(500).json({msg : "cannot logout"})
+        localstorage.removeItem(`token${data.id}`)
+        succesResponse(res, 200, "Berhasil Logout")
+    })
+        // const oldtokenNew = localstorage.getItem('token')
+        // if(!oldtoken) return errorResponse(res, 400, "You are not sign in")
         // const data = await db.query("select * from users where token = $1", [oldtoken])
         // if(!data) return errorResponse(res, 404, "User not found")
-        localstorage.removeItem('token')
-        succesResponse(res, 200, "Berhasil Logout")
+
     } catch (error) {
         res.status(400).json({
             msg : "You are not sign in",

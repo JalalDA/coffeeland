@@ -2,6 +2,7 @@ const productModels = require('../models/products')
 const {getAllProduct, getSingleProduct, createProduct, updateProduct, deleteProduct, searchProduct, favoritProduct} = productModels
 const {succesResponse, errorResponse} = require('../helpers/response')
 const db = require('../config/db')
+// const fs = require('fs')
 
 const getFavoritProduct =  (req, res)=>{
     // try {
@@ -43,11 +44,8 @@ const findProduct = async (req, res) =>{
         const magic = req._parsedUrl.search
         const pageNext = curentPage + 1
         const pagePrev = curentPage - 1
-        console.log(magic);
         const replaceMagicNext = magic.replace(`page=${curentPage}`, `page=${pageNext}`)
         const replaceMagicNextPrev = magic.replace(`page=${curentPage}`, `page=${pagePrev}`)
-        console.log(curentPage);
-        console.log(replaceMagicNext);
         let nextPage = `/product/${replaceMagicNext}`
         let previousPage = `/product/${replaceMagicNextPrev}`
         if(curentPage === totalPage){

@@ -26,12 +26,15 @@ const favoritProduct = (query)=>{
 const searchProduct = (query)=>{
     return new Promise((resolve, reject)=>{
        let {name, order, sort, category_id, page = 1, limit = 3  } = query
-        const arr = [name]
-        let sqlQuery = "select * from products where lower (name) like lower ('%' || $1 || '%')"
-        if(!category_id){reject({msg : "Please insert the category"})}
+        let arr = []
+        let sqlQuery = "select * from products "
+        if(name){
+            sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%')`
+            arr.push(name)
+        }
         if(category_id){
+            sqlQuery += ` and category_id = $${arr.length + 1}`
             arr.push(category_id)
-            sqlQuery += " and category_id=$2"
         }
         if(order){
             if(sort === "price"){
@@ -61,13 +64,15 @@ const searchProduct = (query)=>{
             limit += 2
         }
         if(page){
+            
+            sqlQuery += ` limit $${arr.length + 1}`
             arr.push(limit)
-            sqlQuery += " limit $3"
         }
         const offset = (Number(page-1)) * limit
         if(limit){
+            
+            sqlQuery += ` offset $${arr.length + 1}`
             arr.push(offset)
-            sqlQuery += " offset $4"
         }
         db.query(sqlQuery, arr).then((result)=>{
             const response = {

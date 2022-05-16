@@ -31,7 +31,7 @@ const verifyToken = (req, res, next)=>{
         if (err && err.name === "TokenExpiredError") return res.status(401).json({
             msg : "You need to sign in again"
         })
-        const newToken = localstorage.getItem(`token`)
+        const newToken = localstorage.getItem(`token${payload.id}`)
         if(oldtoken !== newToken) return res.status(401).json({
             msg : 'You are loged out'
         })
@@ -52,7 +52,7 @@ const verifyTokenAmdin = (req, res, next)=>{
         if (err && err.name === "TokenExpiredError") return res.status(401).json({
             msg : "You need to sign in again"
         })
-        const newToken = localstorage.getItem(`token`)
+        const newToken = localstorage.getItem(`token${payload.id}`)
         if(oldtoken !== newToken) return res.status(401).json({
             msg : 'You are loged out'
         })
