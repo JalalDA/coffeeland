@@ -15,7 +15,7 @@ const mainRouter = require('./src/routes/index')
     App.use(cookieParser())
     App.use(mainRouter)
     // eslint-disable-next-line no-undef
-    App.listen(process.env.DB_PORT, ()=>{
+    App.listen(process.env.PORT, ()=>{
         console.log(`Connected at port ${port}`);
     })
     // db.connect().then(()=>{
