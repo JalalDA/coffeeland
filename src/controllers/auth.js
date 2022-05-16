@@ -34,6 +34,7 @@ const Login = async (req, res)=>{
         const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn : "1d"
         })
+        console.log(data);
         localstorage.setItem('token', token)
         const {id, displayname} = data
         succesResponse(res, 200, "Login Succes", {id, displayname, token})

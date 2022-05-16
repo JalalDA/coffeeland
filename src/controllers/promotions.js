@@ -60,6 +60,7 @@ const searchPromoCode = async (req, res)=>{
         let nextPage = `/promo/?code=${code}&page=${curentPage + 1}&limit=${limit}`
         let previousPage = `/promo/?code=${code}&page=${curentPage - 1}&limit=${limit}`
         if(totalPage === curentPage){nextPage = "This is the last page"}
+        if(curentPage === 1) {previousPage = "This is the first page"}
         const data = result.data
         res.status(200).json({
             msg : `Show result for search '${code}' `,

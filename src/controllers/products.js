@@ -3,8 +3,15 @@ const {getAllProduct, getSingleProduct, createProduct, updateProduct, deleteProd
 const {succesResponse, errorResponse} = require('../helpers/response')
 const db = require('../config/db')
 
-const getFavoritProduct = (req, res)=>{
-    favoritProduct().then((result)=>{
+const getFavoritProduct =  (req, res)=>{
+    // try {
+    //     const result = await favoritProduct(req.query)
+    //     const totalData = db.query("secect count(*) as total_product from products inner join transactions on products.name = transactions.products_name group by products name")
+    // } catch (error) {
+    //     console.log(error);
+    //     errorResponse(res, 400, "Cannot get product", error)
+    // }
+    favoritProduct(req.query).then((result)=>{
         res.status(200).json({
             total : result.total,
             data : result.data,
@@ -30,7 +37,7 @@ const findProduct = async (req, res) =>{
         const totalPage = Math.ceil(totalProduct/Number(limit))
         const {page} = req.query
         let curentPage = Number(page)
-        if(curentPage === 0){
+        if(!curentPage){
             curentPage = 1
         }
         const magic = req._parsedUrl.search
