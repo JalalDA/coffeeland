@@ -7,6 +7,9 @@ const transactionsRouter = require('./transactions')
 const promotionRouter = require('./promotions')
 const authRouter = require('./auth')
 
+Router.get('/' , (req, res)=>{
+    res.json({msg : "Wellcome to coffeland"})
+})
 Router.use('/user', userRouter)
 Router.use('/product', productRouter)
 Router.use('/transaction', transactionsRouter)
