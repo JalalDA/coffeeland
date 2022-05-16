@@ -14,7 +14,8 @@ const mainRouter = require('./src/routes/index')
     App.use(express.urlencoded({extended:false}))
     App.use(cookieParser())
     App.use(mainRouter)
-    App.listen(port, ()=>{
+    // eslint-disable-next-line no-undef
+    App.listen(process.env.DB_PORT, ()=>{
         console.log(`Connected at port ${port}`);
     })
     // db.connect().then(()=>{
