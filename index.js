@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express')
+const cors = require('cors')
 
 const cookieParser = require('cookie-parser')
 const {connection} = require('./src/config/db')
@@ -7,6 +8,7 @@ connection()
 const port = 8000
 const App = express();
 const mainRouter = require('./src/routes/index')
+    App.use(cors())
     App.use(express.static('public'))
     App.use(express.json())
     App.use(express.urlencoded({extended:false}))
