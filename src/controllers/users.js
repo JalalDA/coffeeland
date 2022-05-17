@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const {succesResponse, errorResponse} = require('../helpers/response')
-const db = require('../config/db')
+const {db} = require('../config/db')
 
 const userModels = require('../models/users')
 const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser, updateUserUpload} = userModels
@@ -30,13 +30,32 @@ const getAllUser = async (req, res)=>{
         const totalData = total.rows[0].totaldata
         const limit = result.limit
         const totalPage = Math.ceil(totalData / limit)
+        let curentPage = Number(req.query.page)
+        if(!curentPage){
+            curentPage = 1
+        }
+        const path = req.path
+        let nextPage = `/user${path}?page=${curentPage + 1}`
+        let previousPage = `/user${path}?page=${curentPage-1}`
+        const {total_product} = total.rows[0]
+        const totalpage = Math.ceil(Number(total_product)/Number(limit))
+        if(totalpage === curentPage) {
+            nextPage = `This is the last page`
+        }
+        if(curentPage === 1 ){
+            previousPage = `This is the first page`
+        }
         res.status(200).json({
             msg : 'Succes get all data',
             totalData,
             totalPage,
+            curentPage,
+            nextPage,
+            previousPage,
             data : result.data
         })
     } catch (error) {
+        console.log(error);
         errorResponse(res, 400, 'Failed to get all data')
     }
 }

@@ -8,6 +8,6 @@ Router.get('/all', verifyTokenAmdin, transactionController.getAllTransactions)
 Router.get('/:id', verifyToken, transactionController.getDetailTransaction)
 Router.post('/', verifyToken, transactionController.insertTransaction)
 Router.patch('/:id', verifyToken, transactionController.editTransaction)
-Router.delete('/:id', verifyToken, transactionController.deleteTransactionById)
+Router.delete('/:id', verifyTokenAmdin, transactionController.deleteTransactionById)
 
 module.exports = Router

@@ -1,5 +1,5 @@
 const {v4 : uuidv4} = require('uuid')
-const db = require('../config/db')
+const {db} = require('../config/db')
 
 const favoritProduct = (query)=>{
     return new Promise((resolve, reject)=>{
@@ -7,10 +7,11 @@ const favoritProduct = (query)=>{
         if(!page) {page = 1}
         if(!limit) {limit = 3}
         const offset = (Number(page)-1) * Number(limit)
-        const sqlQuery = "SELECT name, price, pictures, count(*) FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by count(*) desc limit $1 offset $2"
+        const sqlQuery = "SELECT name, price, pictures, count(*) as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by count(*) desc limit $1 offset $2"
 
         db.query(sqlQuery, [limit, offset]).then((result)=>{
             const response = {
+                limit,
                 total : result.rowCount,
                 data : result.rows,
                 err : null
@@ -96,7 +97,7 @@ const getAllProduct = (query)=>{
     return new Promise((resolve, reject)=>{
         // let page = query.page = 1
         // let limit = query.limit = 3
-        let {page, limit} = query
+        let {page = 1, limit = 3} = query
         if(!page){
             page = 1
         }

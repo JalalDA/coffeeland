@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const {db} = require('../config/db')
 const modelsTransaction = require('../models/transactions')
 const {getAllTransaction, createTransaction, updateTransaction, getSingelTransaction, deleteTransaction} = modelsTransaction
 

@@ -1,7 +1,7 @@
 const modelPromotion = require('../models/promotions')
 const {getAllPromotion, searchPromo, createPromo, updatePromo, deletePromo} = modelPromotion
 const {succesResponse, errorResponse} = require('../helpers/response')
-const db = require('../config/db')
+const {db} = require('../config/db')
 
 const getAllPromotions = async (req, res)=>{
     try {

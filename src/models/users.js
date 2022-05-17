@@ -1,5 +1,5 @@
 const {v4 : uuidv4} = require('uuid')
-const db = require('../config/db')
+const {db} = require('../config/db')
 
 const updateUserUpload = (id, file, body )=>{
     return new Promise((resolve, reject)=>{
@@ -23,10 +23,13 @@ const updateUserUpload = (id, file, body )=>{
 
 const getAllUsers = (query)=>{
     return new Promise((resolve, reject)=>{
-        const {page = 1, limit = 3} = query
-        const offset = (Number(page) -1 ) * Number(limit)
+        let {page, limit} = query
+        if(!page){page = 1}
+        if(!limit){limit = 3}
+        const offset = (Number(page) - 1 ) * Number(limit)
         db.query('SELECT id, display_name, phone, email from users LIMIT $1 OFFSET $2', [Number(limit), offset])
         .then((result)=>{
+            console.log(offset);
             const response = {
                 limit,
                 total : result.rowCount,

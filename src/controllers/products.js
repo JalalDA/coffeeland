@@ -1,29 +1,56 @@
 const productModels = require('../models/products')
 const {getAllProduct, getSingleProduct, createProduct, updateProduct, deleteProduct, searchProduct, favoritProduct} = productModels
 const {succesResponse, errorResponse} = require('../helpers/response')
-const db = require('../config/db')
+const {db} = require('../config/db')
 // const fs = require('fs')
 
-const getFavoritProduct =  (req, res)=>{
-    // try {
-    //     const result = await favoritProduct(req.query)
-    //     const totalData = db.query("secect count(*) as total_product from products inner join transactions on products.name = transactions.products_name group by products name")
-    // } catch (error) {
-    //     console.log(error);
-    //     errorResponse(res, 400, "Cannot get product", error)
-    // }
-    favoritProduct(req.query).then((result)=>{
+const getFavoritProduct = async (req, res)=>{
+    try {
+        const result = await favoritProduct(req.query)
+        const totalData = await db.query("SELECT count(*) FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name")
+        const limit = result.limit 
+        let curentPage = Number(req.query.page)
+        if(!curentPage){
+            curentPage = 1
+        }
+        const total_product = totalData.rowCount
+        const path = req.path
+        let nextPage = `/product${path}?page=${curentPage+1}`
+        let previousPage = `/product${path}?page=${curentPage-1}`
+        const totalpage = Math.ceil(Number(total_product)/Number(limit))
+        console.log(totalpage);
+        if(totalpage === curentPage) {
+            nextPage = `This is the last page`
+        }
+        if(curentPage === 1 ){
+            previousPage = `This is the first page`
+        }
         res.status(200).json({
-            total : result.total,
+            msg : "Show favorit product",
+            total_product,
+            totalpage,
+            curentPage,
+            nextPage,
+            previousPage,
             data : result.data,
-            err : null
         })
-    }).catch((err)=>{
-        res.status(400).json({
-            err,
-            data : []
-        })
-    })
+        // succesResponse(res, 400, "Show favorit product", result, total_product)
+    } catch (error) {
+        console.log(error);
+        errorResponse(res, 400, "Cannot get product", error)
+    }
+    // favoritProduct(req.query).then((result)=>{
+    //     res.status(200).json({
+    //         total : result.total,
+    //         data : result.data,
+    //         err : null
+    //     })
+    // }).catch((err)=>{
+    //     res.status(400).json({
+    //         err,
+    //         data : []
+    //     })
+    // })
 }
 
 const findProduct = async (req, res) =>{
@@ -88,7 +115,7 @@ const getAllProducts = async (req, res)=>{
         const data = await db.query("select count(*) as total_product from products")
         const limit = result.limit 
         let curentPage = Number(req.query.page)
-        if(curentPage === 0){
+        if(!curentPage){
             curentPage = 1
         }
         const path = req.path

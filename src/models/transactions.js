@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const {db} = require('../config/db')
 const {v4 : uuidv4} = require('uuid')
 
 const getAllTransaction = (query)=>{
@@ -7,7 +7,7 @@ const getAllTransaction = (query)=>{
         if(!page) {page = 1}
         if(!limit) {limit = 2}
         const offset = (Number(page)-1) * Number(limit)
-        db.query("SELECT * FROM transactions LIMIT $1 OFFSET $2 RETURNING *", [limit, offset]).then((result)=>{
+        db.query("SELECT * FROM transactions LIMIT $1 OFFSET $2", [limit, offset]).then((result)=>{
             const response = {
                 limit,
                 total : result.rowCount,
