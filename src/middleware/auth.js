@@ -32,7 +32,7 @@ const verifyToken = (req, res, next)=>{
             msg : "You need to sign in again"
         })
         const newToken = localstorage.getItem(`token${payload.id}`)
-        if(oldtoken !== newToken) return res.status(401).json({
+        if(oldtoken !== newToken) return res.status(403).json({
             msg : 'You are loged out'
         })
         req.userPayload = payload
@@ -53,10 +53,10 @@ const verifyTokenAmdin = (req, res, next)=>{
             msg : "You need to sign in again"
         })
         const newToken = localstorage.getItem(`token${payload.id}`)
-        if(oldtoken !== newToken) return res.status(401).json({
+        if(oldtoken !== newToken) return res.status(403).json({
             msg : 'You are loged out'
         })
-        if(payload.role !== 'admin') return res.status(400).json({msg : "You are not admin"})
+        if(payload.role !== 'admin') return res.status(403).json({msg : "You are not admin"})
         req.userPayload = payload
         next()
     })
