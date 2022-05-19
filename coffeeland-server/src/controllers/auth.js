@@ -7,18 +7,15 @@ const {SignUp, getPassByEmail} = require('../models/users')
 
 
 const Register = async (req, res)=>{
-    const password = req.body.password
-    const salt = await bcrypt.genSalt()
-    const hashPassword = await bcrypt.hash(password, salt)
     try {
+        const password = req.body.password
+        const salt = await bcrypt.genSalt()
+        const hashPassword = await bcrypt.hash(password, salt)
         const data = await SignUp(req.body, hashPassword)
         succesResponse(res, 200, "Register Succes!!!", data)
     } catch (error) {
         console.log(error);
         errorResponse(res, 400, "Register failed")
-        res.status(400).json({
-            error
-        })
     }
 }
 

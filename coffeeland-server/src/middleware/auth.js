@@ -33,7 +33,7 @@ const verifyToken = (req, res, next)=>{
         })
         const newToken = localstorage.getItem(`token${payload.id}`)
         if(oldtoken !== newToken) return res.status(403).json({
-            msg : 'You are loged out'
+            msg : 'You are logged out'
         })
         req.userPayload = payload
         console.log(req.userPayload.id);

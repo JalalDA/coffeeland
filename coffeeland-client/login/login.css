@@ -1,0 +1,219 @@
+*, *::after, *::before{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.headerContainer{
+    display: flex;
+}
+.img{
+    flex: 1;
+    background-color:coral;
+    height: 1100px;
+}
+.loginPage {
+    flex: 1;
+}
+.loginForm{
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    font-family: 'Rubik', sans-serif;
+    margin-bottom: 20px;
+}
+.loginHeader{
+    display: flex;
+    padding: 55px;
+}
+.logo{
+    display: flex;
+    flex: 1;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    position: relative;
+}
+.textLogo{
+    position: absolute;
+    bottom: 10px;
+    left: 30%;
+    font-size: 20px;
+}
+.imgLogo {
+    margin-right: 15px;
+}
+.btn-signup{
+    display: flex;
+    flex: 1;
+    background-color: #FFBA33;
+    border-radius: 50px;
+    height: 75px;
+    align-items: center;
+    justify-content: center;
+    color: #6A4029;
+    font-family: 'Rubik', sans-serif;
+}
+.loginText{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 41px;
+    color: #6A4029;
+    font-family: 'Rubik', sans-serif;
+}
+
+.forgotPassword {
+    font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+text-decoration-line: underline;
+}
+
+.inputLabel{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.input{
+    padding: 30px 25px;
+    font-size: 20px;
+    font-weight: 400;
+    border-style: none;
+    border-radius: 20px;
+    border: 1px solid #666;
+    margin-bottom: 20px;
+}
+
+.btn-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    background-color: #FFBA33;
+    height: 75px;
+    box-shadow: 0px 6px 20px rgba(255, 186, 51, 0.4);
+    border-radius: 20px;
+    width: 100%;
+    cursor: pointer;
+    color: #6A4029;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.btn-login-google{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    background-color: #FFFFFF;
+    height: 75px;
+    box-shadow: 0px 6px 20px rgba(196, 196, 196, 0.67);
+    border-radius: 20px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+}
+.btn-login-google > p{
+    margin-left: 14px;
+}
+.btn-login-google:active{
+    background-color: #f7e4e4;
+}
+.btn-login:active{
+    background-color: #fcc75d;
+}
+.member-card{
+    margin-top: 1%;
+    padding: 70px;
+    width: 70%;
+    height: 233px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    position: absolute;
+    top: 978px;
+    left: 15%;
+    right: 15%;
+    border-radius: 10px;
+}
+
+.getMembertext{
+    display: flex;
+    flex-direction: column;
+    margin-right: 50;
+}
+.getMemberNow{
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 45px;
+}
+.letsJoin{
+    margin-top: 20px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.btn-member{
+    display: flex;
+    height: 60px;
+    align-items: center;justify-content: center;
+    padding: 20px 70px;
+    background-color: #FFBA33;
+    font-family: 'Rubik' , sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btn-member:active{
+    background-color:#fcc75d;
+}
+.footer{
+    display: flex;
+    height: 528px;
+}
+.about{
+    flex: 1;
+    background-color: chocolate;
+    padding-left: 151px;
+    padding-top: 181px;
+    font-family: 'Rubik', sans-serif;
+    background: #F8F8F8;
+}
+.aboutText{
+    margin-bottom: 45px;
+}
+.footerlogo{
+    margin-right: 15px;
+}
+
+.aboutHeader{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+}
+.socialIcon{
+    display: flex;
+    margin-bottom: 30px;
+    width: 18%;
+    justify-content: space-between;
+}
+.waterMark{
+    color: #AFB5C0;
+}
+.footerSide{
+    flex: 1;
+    background-color: burlywood;
+}
