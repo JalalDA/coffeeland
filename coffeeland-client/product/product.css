@@ -6,6 +6,7 @@
 .header{
     height: 130px;
     border-bottom: 0.5px solid #9F9F9F;
+    background-color: #FFFFFF;
 }
 .logo{
     display: flex;
@@ -28,6 +29,12 @@
     font-size: 16px;
     font-weight: 500;
     color: #4F5665;
+    cursor: pointer;
+}
+.navigasi>li:hover{
+    font-size: 16px;
+    font-weight: 700;
+    color: #6a4029;
 }
 .auth{
     display: flex;
@@ -71,8 +78,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    margin-bottom: 50px;
 }
 .promoTitle > h3{
     font-size: 25px;
@@ -81,15 +86,15 @@
     padding: 29px;
 }
 .imgContainer{
+    margin: 0vh 10vh;
     position: relative;
     background: #FFCB65;
-    width: 400px;
-    height: 672px;
+    height: 500px;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
     border-radius: 20px;
-    padding: 30px;
     z-index: 5;
 }
 .discount{
@@ -98,29 +103,34 @@
     align-items: center;
     justify-content: center;
 }
-.imgContainer >img{
+.imgContainer > img{
     border-radius: 50%;
     padding: 10px 50px;
     margin-top: 20px;
 }
+.layer{
+    position: relative;
+}
 .blackLayer{
-    width: 400px;
-    height: 550px;
+    width: 50%;
+    margin: 0vh 10vh;
+    height: 400px;
     background-color: #000000;
     border-radius: 20px;
     position: absolute;
-    top: 400px;
-    left: 80px;
+    top: 7vh;
+    left: 15vh;
     z-index: 4;
 }
 .brownLayer{
-    width: 400px;
-    height: 400px;
+    width: 50%;
+    margin: 0vh 10vh;
+    height: 300px;
     background-color:#6a4029;
     border-radius: 20px;
     position: absolute;
-    top: 500px;
-    left: 100px;
+    top: 13vh;
+    left: 18vh;
     z-index: 3;
 }
 .promo-title{
@@ -138,16 +148,38 @@
 }
 .apply{
     display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+.applyCoupon{
+    width: 70%;
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: #6a4029;
     margin-top: 45px;
-    width: 400px;
     height: 64px;
     border-radius: 20px;
     color: white;
     font-size: 17px;
     font-weight: 700;
+    margin-bottom: 112px;
+    cursor: pointer;
+}
+.applyCoupon:active{
+    background-color: #a37860;
+}
+.terms{
+    margin-left: 55px;
+}
+.terms>h5{
+    font-size: 12px;
+    font-weight: 700;
+}
+.terms>p{
+    font-size: 12px;
+    font-weight: 400;
 }
 .productHeader{
     display: flex;
@@ -158,7 +190,6 @@
     font-weight: 400;
     color: #9F9F9F;
     cursor: pointer;
-    background-color: blue;
 }
 .headerItem:active{
     font-weight: 700;
@@ -166,9 +197,95 @@
     color:#6a4029;
 }
 .favoriteProduct{
-    background-color: yellow ;
+    padding: 30px;
 }
 .productContainer{
-    background-color: #9F9F9F;
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border-radius: 30px;
+    margin-bottom: 30px;
+}
+.cardProduct{
+    width: 156px;
+    position: relative;
+    height: 212px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 30px 60px rgba(57, 57, 57, 0.1);
+    border-radius: 30px;
+}
+.imgProduct{
+    position: absolute;
+    border-radius: 50%;
+    top: -80px;
+}
+.productName{
+    font-size: 22px;
+    font-weight: 900;
+}
+.footer{
+    background-color: #f8f8f8;
+    height: 466px;
+    margin-top: 20px;
+}
+.about{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15vh;
+}
+.footer{
+    display: flex;
+    height: 528px;
+}
+.aboutText{
+    margin-bottom: 45px;
+}
+.footerlogo{
+    margin-right: 15px;
+}
+.aboutHeader{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+}
+.socialIcon{
+    display: flex;
+    margin-bottom: 30px;
+    width: 20%;
+    justify-content: space-between;
+}
+.waterMark{
+    color: #AFB5C0;
+}
+.footerSide{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #F8F8F8;
+    font-family: 'Rubik', sans-serif;
+}
+
+.productList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.product > p{
+    margin: 10px 0px;
+    color: #4F5665;
+}
+
+.engageList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.engage > p{
+    margin: 10px 0px;
+    color: #4F5665;
 }
