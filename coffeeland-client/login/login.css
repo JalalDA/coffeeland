@@ -5,17 +5,19 @@
 
 .headerContainer{
     display: flex;
+    width: 100%;
 }
 .img{
     flex: 1;
     background-color:coral;
     height: 1100px;
+    width: 50%;
 }
 .loginPage {
     flex: 1;
 }
 .loginForm{
-    margin: 100px;
+    padding: 20px 90px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -29,19 +31,18 @@
 }
 .logo{
     display: flex;
+    align-items:center;
     flex: 1;
     font-family: 'Rubik', sans-serif;
     font-weight: 600;
-    position: relative;
 }
 .textLogo{
-    position: absolute;
-    bottom: 10px;
-    left: 30%;
-    font-size: 20px;
+    font-size: 30px;
 }
 .imgLogo {
-    margin-right: 15px;
+    width: 60px;
+    height: 60px;
+    margin-right: 5%;
 }
 .btn-signup{
     display: flex;
@@ -49,12 +50,21 @@
     background-color: #FFBA33;
     border-radius: 50px;
     height: 75px;
+    width: 5%;
     align-items: center;
     justify-content: center;
     color: #6A4029;
     font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-signup:active{
+    background-color: #fcc75d;
 }
 .loginText{
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,9 +77,14 @@
 
 .forgotPassword {
     font-weight: 700;
-font-size: 20px;
-line-height: 24px;
-text-decoration-line: underline;
+    font-size: 20px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    cursor: pointer;
+    color: #6A4029;
+}
+.forgotPassword:active{
+    color: #a07259;
 }
 
 .inputLabel{
@@ -207,7 +222,7 @@ text-decoration-line: underline;
 .socialIcon{
     display: flex;
     margin-bottom: 30px;
-    width: 18%;
+    width: 20%;
     justify-content: space-between;
 }
 .waterMark{
@@ -215,5 +230,64 @@ text-decoration-line: underline;
 }
 .footerSide{
     flex: 1;
-    background-color: burlywood;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #F8F8F8;
+    font-family: 'Rubik', sans-serif;
+}
+
+.productList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.product > p{
+    margin: 10px 0px;
+    color: #4F5665;
+}
+
+.engageList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.engage > p{
+    margin: 10px 0px;
+    color: #4F5665;
+}
+
+@media (max-width : 1024px) {
+    .loginHeader{
+        padding: 20px;
+        margin: 0px;
+    }
+    .loginForm{
+        padding: 0px;
+        margin: 20px;
+    }
+    .textLogo{
+        margin: 0%;
+    }
+    .imgLogo{
+        width: 40px;
+        height: 40px;
+    }
+    .btn-signup{
+        width: 10%;
+    }
+    .imgIcon{
+        margin-left: 10px;
+    }
+    .socialIcon{
+        width: 40%;
+    }
+}
+
+@media(min-width : 768px) {
+    .img{
+        width: 50%;
+    }
 }

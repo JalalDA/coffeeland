@@ -1,0 +1,291 @@
+*, *::after, *::before{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    height: 129px;
+    font-size: 20px;
+    position: sticky;
+    z-index: 99;
+    background-color:#FFFFFF;
+}
+.logo{
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.textLogo{
+    color: #0B132A;
+    font-weight: 700;
+}
+.navbarItem{
+    flex: 6;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    list-style: none;
+}
+.navbarItem > li{
+    margin: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: #4F5665;
+    ;
+}
+.navbarItem > li:hover{
+    color: #6A4029;
+}
+.auth{
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+}
+.btn-signUp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFBA33;
+    width: 30%;
+    padding: 3%;
+    cursor: pointer;
+    border-radius: 50px;
+    color: #0B132A;
+    font-weight: 600;
+}
+.imgLogo{
+    margin-right: 5%;
+}
+.hero{
+    object-fit: cover;
+    width: 100%;
+    height: 645px;
+    /* background-image: url(/coffeeland-client/assets/img/hero.png); */
+}
+.image{
+    object-fit: cover;
+    width: 100%;
+}
+.textHero{
+    position: absolute;
+    color: #FFFFFF;
+    top: 207px;
+    left: 150px;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.hero > p{
+    position: absolute;
+    color: #FFFFFF;
+    top: 350px;
+    left: 150px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.getStarted{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 450px;
+    background-color: #FFBA33;
+    left: 150px;
+    width: 250px;
+    height: 60px;
+    padding: 18px 77px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #6A4029;
+    font-size: 16px;
+    font-weight: 600;
+}
+.getStarted:active{
+    background-color: #ffcc67;
+}
+.infoStore{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #FFFFFF;
+    height: 200px;
+    width: 1240px;
+    position: absolute;
+    top: 750px;
+    left: 10%;
+    border-radius: 10px;
+}
+.staff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imgStaff{
+    background-color:#FFBA33;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    width: 55px;
+    padding: 20px;
+}
+.textStaff{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.angka{
+    font-weight: 700;
+    color: #0B132A;
+    font-size: 25px;
+}
+.textStaff >p{
+    color: #4F5665;
+    font-size: 20px;
+}
+.line{
+    background-color:#FFFFFF;
+    width: 10px;
+    height: 100px;
+    border-left: 2px solid #EEEFF2;
+}
+.teamWork{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 750px;
+    padding: 150px;
+}
+.teamWorkImg{
+    flex: 1;
+}
+.teamWorkText{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 130px;
+}
+.quotes{
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 25px;
+}
+.textQuotes{
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.checklist{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 15px;
+}
+.checklistText{
+    margin-left: 15px;
+}
+.favorite{
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    width: 100%;
+    height: 800px;
+    flex-direction: column;
+    padding-top: 80px;
+}
+.favoriteTitle{
+    font-weight: 700;
+    font-size: 35px;
+    margin-bottom: 20px;
+    color: #0B132A;
+}
+.desc{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+}
+.favoriteProduct{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 160px;
+}
+.imgProductContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 1830px;
+}
+.imgProduct{
+    border-radius: 50%;
+    margin-bottom: 30px;
+}
+.productTittle{
+    font-size: 18px;
+    font-weight: 600;
+    color: #0B132A;
+    margin-bottom: 30px;
+}
+.containerProduct{
+    width: 350px;
+    height: 567px;
+    border: 2px solid #DDDDDD ;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.productInfo{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+.checklistmin{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 70%;
+}
+.checkText{
+    margin-left: 25px;
+}
+.price{
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.priceLabel{
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 30px;
+    color: #0B132A;
+}
+.orderNow{
+    width: 180px;
+    height: 45px;
+    border: 2px solid #FFBA33;
+    color: #6A4029;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    margin-top: 20px;
+}
+.img{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
