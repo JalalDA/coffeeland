@@ -541,6 +541,49 @@
         margin: 0px;
         padding: 0px;
     }
+    .teamWork{
+        margin: 0;
+        padding: 0;
+        flex-direction: column-reverse;
+    }
+    .hero{
+        margin: 0;padding: 0;
+        height: 400px;
+    }
+    .favorite{
+        width: 100%;
+    }
+    .favoriteProduct{
+        padding: 0;
+        top: 300px;
+    }
+    .maps{
+        margin: 0;
+        padding: 0;
+    }
+    .maps>h3{
+        font-size: 25px;
+        font-weight: 700;
+        margin-top: 10px;
+    }
+    .maps>img{
+        width: 100%;
+    }
+    .promo{
+        top: 4800px;
+    }
+    .testiListItem{
+        height: 400px;
+    }
+    .footer{
+        padding: 100px;
+        padding-bottom: 0;
+    }
+    .btn-signUp{
+        width: auto;
+        padding: 10px;
+        border-radius: 20px;
+    }
 }
 
 @media screen and (max-width :768px) {
@@ -664,5 +707,6 @@
     .footer{
         padding: 50px;
         margin: 0;
+
     }
 }
