@@ -547,10 +547,122 @@
     .teamWork{
         padding: 0px;
         margin: 0px;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
     .hero{
         padding: 0px;
         margin: 0px;
+        height: 300px;
+    }
+    .teamWorkImg{
+        margin: 0;
+        padding: 0;
+    }
+    .infoStore{
+        margin: 0;
+        padding: 0;
+        width: 80%;
+    }
+    .textLogo{
+        font-size: 18px;
+    }
+    .navbarItem > li{
+        font-size: 13px;
+    }
+    .btn-login, .btn-signUp{
+        font-size: 14px;
+    }
+    .btn-signUp{
+        width: auto;
+    }
+    .textHero{
+        top: 140px;
+    }
+    .hero>p{
+        top: 300px;
+    }
+    .getStarted{
+        top: 400px;
+    }
+    .teamWorkText{
+        margin: 0;
+    }
+    .quotes{
+        margin : 0;
+        padding: 0;
+        font-size: 25px;
+    }
+    .textQuotes{
+        font-size: 14px;
+    }
+    .checklistText{
+        font-size: 14px;
+    }
+    .favoriteProduct{
+        top: 280px;
+        padding: 40px;
+    }
+    .containerProduct{
+        width: 230px;
+        padding-top: 175px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .checkText{
+        font-size: 14px;
+    }
+    .price{
+        margin: 0;
+    }
+    .maps{
+        margin: 0;
+        padding: 0;
+    }
+    .maps>h3{
+        font-size: 25px;
+        font-weight: 700;
+    }
+    .maps>p{
+        font-size: 16px;
+        margin: 0;
+    }
+    .maps>img{
+        width: 100%;
+    }
+    .partner>h3{
+        font-size: 25px;
+    }
+    .promo{
+        position: relative;
+        padding: 20px;
+        height: 200px;
+    }
+    .testiContainer{
+        padding: 0;
+        margin: 0;
+    }
+    .testiTitle>h2{
+        font-size: 25px;
+        font-weight: 700;
+    }
+    .testiTitle>p{
+        font-size: 16px;
+        font-weight: 400;
+        margin: 0;
+    }
+    .testiList{
+        margin: 0;
+        width: 100%;
+    }
+    .testiListItem{
+        margin-left: 10px;
+        height: 350px;
+    }
+    .paginasi{
+        display: none;
+    }
+    .footer{
+        padding: 50px;
+        margin: 0;
     }
 }
