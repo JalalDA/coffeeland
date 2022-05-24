@@ -233,7 +233,6 @@
 }
 .footer{
     background-color: #f8f8f8;
-    height: 466px;
     margin-top: 20px;
 }
 .about{
@@ -244,6 +243,7 @@
 }
 .footer{
     display: flex;
+    padding-left: 150px;
 }
 .aboutText{
     margin-bottom: 45px;
@@ -255,6 +255,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 26px;
+    font-size: 16px;
+    font-weight: 700;
 }
 .socialIcon{
     display: flex;
@@ -315,6 +317,17 @@
     .productHeader{
         font-size: 15px;
     }
+    .footerSide{
+        margin: 0;
+        padding: 0;
+    }
+    .about{
+        height: auto;
+        width: 100%;
+    }
+    .foooter{
+        height: 600px;
+    }
 }
 
 @media screen and (max-width : 768px) {
@@ -368,5 +381,9 @@
         position: absolute;
         left: 60px;
         height: 320px;
+    }
+    .footer{
+        padding-left: 30px;
+        flex-direction: column-reverse;
     }
 }

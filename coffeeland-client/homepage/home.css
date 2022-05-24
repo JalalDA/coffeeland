@@ -676,9 +676,7 @@
         font-size: 25px;
     }
     .promo{
-        position: relative;
-        padding: 20px;
-        height: 200px;
+        display: none;
     }
     .testiContainer{
         padding: 0;
@@ -709,4 +707,83 @@
         margin: 0;
 
     }
+}
+
+@media screen and (max-width:425px) {
+    .maps>h3{
+        margin: 0;
+    }
+    .maps>p{
+        text-align: center;
+    }
+    .paginasi{
+        display: none;
+    }
+    .auth{
+        display: none;
+    }
+    .hero{
+        height: 450px;
+    }
+    .textHero{
+        margin: 0;
+        font-size: 20px;
+        left: 20px;
+    }
+    .hero>p{
+        top: 220px;
+        font-size: 14px;
+        left: 20px;
+    }
+    .hero>img{
+        height: 380px;
+        object-fit: cover;
+    }
+    .getStarted{
+        top: 350px;
+        left: 20px;
+    }
+    .quotes{
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+    }
+    .teamWork{
+        width: 100%;
+        margin-left: 20px;
+    }
+    .teamWork>img{
+        width: 100%;
+    }
+    .infoStore{
+        display: none;
+    }
+    .productInfo{
+        display: none;
+    }
+    .favoriteTitle{
+        font-size: 25px;
+        font-weight: 700;
+    }
+    .favoriteProduct{
+        flex-direction: column;
+    }
+    .desc{
+        margin: 0;
+        font-size: 16px;
+    }
+    .maps>img{
+        width: 100%;
+    }
+    .testiList{
+        flex-direction: column;
+        row-gap: 20px;
+    }
+    .footer{
+        height: auto;
+    }
+    .promo{
+        display: none;
+    }
+    
 }
