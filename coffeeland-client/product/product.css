@@ -12,11 +12,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.logo >h2{
-    margin-left: 15px;
     font-size: 20px;
     font-weight: 600;
+    width: 100%;
+}
+.logoImg{
+    margin-right: 15px;
 }
 .navigasi{
     list-style: none;
@@ -224,6 +225,12 @@
     font-size: 22px;
     font-weight: 900;
 }
+.price{
+    font-size: 17px;
+    font-weight: 700;
+    color: #6a4029;
+    margin-top: 10%;
+}
 .footer{
     background-color: #f8f8f8;
     height: 466px;
@@ -237,7 +244,6 @@
 }
 .footer{
     display: flex;
-    height: 528px;
 }
 .aboutText{
     margin-bottom: 45px;
@@ -288,4 +294,79 @@
 .engage > p{
     margin: 10px 0px;
     color: #4F5665;
+}
+
+@media screen and (max-width:425px){
+    .auth {
+        display: none;
+    }
+    .dashLine{
+        width: 98%;
+    }
+    .sideBar {
+        border: 0px;
+    }
+    .logo{
+        width: 50%;
+    }
+    .imgContainer{
+        width: 70%;
+    }
+    .productHeader{
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width : 768px) {
+    .navigasi > li{
+        font-size: 12px;
+    }
+    .productHeader{
+        font-size: 15px;
+    }
+    .promoTitle>h3{
+        font-size: 18px;
+    }
+    .promoTitle>p{
+        display: none;
+    }
+    .imgContainer{
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+    .discount>h2{
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .discount>p{
+        font-size: 12px;
+    }
+    .dashLine{
+        width: 100%;
+    }
+    .p2{
+        font-size: 13px;
+    }
+    .coupon>h1{
+        font-size:24px;
+        font-weight: 700;
+        margin: 20px;
+    }
+    .coupon>p{
+        font-size: 13px;
+    }
+    .layer{
+        position: relative;
+    }
+    .blackLayer{
+        position: absolute;
+        left: 50px;
+        height: 420px;
+    }
+    .brownLayer{
+        position: absolute;
+        left: 60px;
+        height: 320px;
+    }
 }

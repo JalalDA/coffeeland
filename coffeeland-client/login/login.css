@@ -1,6 +1,7 @@
 *, *::after, *::before{
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
 }
 
 .headerContainer{
@@ -196,16 +197,17 @@
     background-color:#fcc75d;
 }
 .footer{
+    background-color: #f8f8f8;
+    margin-top: 20px;
     display: flex;
-    height: 528px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15vh;
 }
 .about{
-    flex: 1;
-    background-color: chocolate;
-    padding-left: 151px;
-    padding-top: 181px;
-    font-family: 'Rubik', sans-serif;
-    background: #F8F8F8;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 .aboutText{
     margin-bottom: 45px;
@@ -213,17 +215,21 @@
 .footerlogo{
     margin-right: 15px;
 }
-
 .aboutHeader{
     display: flex;
     align-items: center;
     margin-bottom: 26px;
+    font-size: 20px;
+    font-weight: 700;
 }
 .socialIcon{
     display: flex;
     margin-bottom: 30px;
     width: 20%;
     justify-content: space-between;
+}
+.imgIcon{
+    margin-left: 20px;
 }
 .waterMark{
     color: #AFB5C0;
@@ -235,6 +241,7 @@
     justify-content: space-around;
     background-color: #F8F8F8;
     font-family: 'Rubik', sans-serif;
+    margin-left: 300px;
 }
 
 .productList{
@@ -259,7 +266,7 @@
     color: #4F5665;
 }
 
-@media (max-width : 1024px) {
+@media screen and (max-width : 1024px) {
     .loginHeader{
         padding: 20px;
         margin: 0px;
@@ -286,8 +293,88 @@
     }
 }
 
-@media(min-width : 768px) {
+@media screen and (max-width : 768px) {
     .img{
-        width: 50%;
+        display: none;
+    }
+    .loginPage{
+        padding: 50px;
+    }
+    .member-card{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        top: 890px;
+        height: 250px;
+        width: 80%;
+        left: 10%;
+        padding: 0px;
+        margin: 0px;
+    }
+    .getMemberNow{
+        font-size: 20px;
+    }
+    .letsJoin{
+        font-size: 15px;
+    }
+    .btn-member{
+        margin-left: 50px;
+    }
+    .footer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 250px;
+        width: 100%;
+    }
+    .footerSide{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0px;
+    }
+}
+@media screen and (max-width: 425px) {
+    .btn-signup{
+        position: absolute;
+        top: 20px;
+        right:15px;
+        width: 100px;
+        height: 50px;
+    }
+    .logo{
+        position: absolute;
+        top: 20px;
+        left: 15px;
+    }
+    .textLogo{
+        font-size: 20px;
+    }
+    .member-card{
+        display: none;
+    }
+    .footer{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column-reverse;
+        padding: 0px;
+        padding-top: 30px;
+        margin: 0px;
+    }
+    .product{
+        margin-right: 50px;
+        cursor: pointer;
+    }
+    .footerSide{
+        margin: 0;
+        padding: 0%;
+    }
+    .about{
+        padding-top: 20px;
+        margin-top: 20px;
     }
 }

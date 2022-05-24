@@ -63,13 +63,12 @@
     margin-right: 5%;
 }
 .hero{
-    object-fit: cover;
-    width: 100%;
     height: 645px;
-    /* background-image: url(/coffeeland-client/assets/img/hero.png); */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
 }
-.image{
-    object-fit: cover;
+.hero>img{
     width: 100%;
 }
 .textHero{
@@ -197,7 +196,8 @@
     align-items: center;
     background-color: #f8f8f8;
     width: 100%;
-    height: 800px;
+    height: 1000px;
+    position: relative;
     flex-direction: column;
     padding-top: 80px;
 }
@@ -215,19 +215,20 @@
 .favoriteProduct{
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    position: absolute;
+    top: 130px;
     width: 100%;
     padding: 160px;
+    z-index: 5;
 }
 .imgProductContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: 1830px;
 }
 .imgProduct{
     border-radius: 50%;
-    margin-bottom: 30px;
 }
 .productTittle{
     font-size: 18px;
@@ -250,6 +251,9 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
+    padding: 175px;
+    position: absolute;
+    top: 200px;
 }
 .checklistmin{
     display: flex;
@@ -288,4 +292,265 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+.maps{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 100px;
+}
+.maps>img{
+    margin-top: 50px;
+}
+.maps>h3{
+    font-size: 35px;
+    font-weight: 500;
+    color: #0B132A;
+    margin-bottom: 20px;
+}
+.maps>p{
+    font-size: 16px;
+    font-weight: 400;
+    color:#4F5665 ;
+    margin-bottom: 20px;
+}
+.partner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px;
+}
+.partner>h3{
+    font-size: 35px;
+    font-weight: 600;
+}
+.testiContainer {
+    background-color: #f8f8f8;
+    padding: 100px;
+    text-align: center;
+}
+.testiTitle >h2 {
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 50px;
+    text-align: center;
+    color: #0b132a;
+}
+.testiTitle >p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #4f5665;
+}
+.testiList {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+
+}
+.testiName{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.testiListItem {
+    border: 2px solid #DDDDDD;
+    border-radius: 10px;
+    padding: 20px;
+    height: 250px;
+    width: 100%;
+    margin-left: 50px;
+}
+.testiListItem:hover{
+    border: 2px solid #6A4029;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.star{
+    margin-left: 10px;
+}
+.testiDesc {
+    padding-top: 20px;
+    text-align: left;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    color: #0b132a;
+}
+.footer{
+    background-color: #f8f8f8;
+    margin-top: 20px;
+}
+.about{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15vh;
+}
+.paginasi{
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color:#F8F8F8;
+    height: 350px;
+}
+.slide{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+}
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 10%;
+    position: relative;
+    cursor: pointer;
+}
+.btn-right{
+    position: absolute;
+    top: -30px;
+    right: -150px;
+}
+.promoContainer{
+    background-color:#f8f8f8;
+    width: 100%;
+    width: 100%;
+}
+.promo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    position: absolute;
+    background-color: #FFFFFF;
+    z-index: 5;
+    height: 233px;
+    left: 12%;
+    top: 655%;
+    padding: 100px;
+    border-radius: 10px;
+}
+.promotext>h3{
+    font-weight: 600;
+    font-size: 35px;
+    color: #0B132A;
+}
+.promotext>p{
+    font-size: 16px;
+    font-weight: 400;
+    color:#4f5665;
+}
+.btn-promo{
+    height: 60px;
+    width: 250px;
+    background-color: #FFBA33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6A4029;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.btn-promo:hover{
+    background-color: #ffcc67;
+}
+.footer{
+    display: flex;
+    padding: 150px;
+}
+.aboutText{
+    margin-bottom: 45px;
+}
+.footerlogo{
+    margin-right: 15px;
+}
+.aboutHeader{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.socialIcon{
+    display: flex;
+    margin-bottom: 30px;
+    width: 20%;
+    justify-content: space-between;
+}
+.waterMark{
+    color: #AFB5C0;
+}
+.footerSide{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: 'Rubik', sans-serif;
+}
+
+.productList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.product > p{
+    margin: 10px 0px;
+    color: #4F5665;
+}
+
+.engageList{
+    color: #0B132A;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.engage > p{
+    margin: 10px 0px;
+    color: #4F5665;
+}
+
+
+@media screen and (max-width:1440px) {
+    .promo{
+        position: absolute;
+        top: 475%;
+    }
+}
+
+@media screen and (max-width:1024px){
+    .infoStore{
+        position: relative;
+        width: 90%;
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width :768px) {
+    .teamWork{
+        padding: 0px;
+        margin: 0px;
+        flex-direction: column;
+    }
+    .hero{
+        padding: 0px;
+        margin: 0px;
+    }
 }
