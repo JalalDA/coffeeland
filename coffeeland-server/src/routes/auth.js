@@ -2,7 +2,7 @@ const express = require('express')
 const Router = express.Router()
 
 const authController = require('../controllers/auth')
-const {chekDuplicateEmail} = require('../middleware/auth')
+const {chekDuplicateEmail, verifyToken} = require('../middleware/auth')
 
 Router.post('/login', authController.Login)
 Router.post('/register', chekDuplicateEmail , authController.Register)

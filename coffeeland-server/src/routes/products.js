@@ -7,7 +7,7 @@ const {uploadProducts} = require('../middleware/upload')
 const validateAuth = require('../middleware/auth')
 
 Router.get('/favorit', productController.getFavoritProduct)
-Router.get('/', validate.findProduct, productController.findProduct)
+Router.get('/', productController.findProduct)
 Router.get('/all', productController.getAllProducts)
 Router.get('/:id', productController.getProductById)
 Router.post('/', validateAuth.verifyTokenAmdin, uploadProducts.single('pictures'), productController.insertProduct)

@@ -13,6 +13,7 @@ const Register = async (req, res)=>{
         const hashPassword = await bcrypt.hash(password, salt)
         const data = await SignUp(req.body, hashPassword)
         succesResponse(res, 200, "Register Succes!!!", data)
+        console.log(salt);
     } catch (error) {
         console.log(error);
         errorResponse(res, 400, "Register failed")
@@ -33,8 +34,8 @@ const Login = async (req, res)=>{
         })
         console.log(data);
         localstorage.setItem(`token${data.id}`, token)
-        const {id, displayname} = data
-        succesResponse(res, 200, "Login Succes", {id, displayname, token})
+        const {photo} = data
+        succesResponse(res, 200, "Login Succes", {photo, token})
     } catch (error) {
         console.log(error);
         errorResponse(res, 400, "Login Failed", {error})
@@ -44,15 +45,13 @@ const Login = async (req, res)=>{
 const Logout = async(req, res)=>{
     try {
     const bearerToken = req.header('Authorization')
-    if(!bearerToken) return res.status(403).json({
-        msg : "You need to sign in"
-    })
+    console.log(bearerToken);
     const oldtoken = bearerToken.split(" ")[1]
     // eslint-disable-next-line no-undef
     jwt.verify(oldtoken, process.env.JWT_SECRET, (err, data)=>{
         if(err) res.status(500).json({msg : "cannot logout"})
         localstorage.removeItem(`token${data.id}`)
-        succesResponse(res, 200, "Berhasil Logout")
+        succesResponse(res, 200, "Logged out succes")
     })
         // const oldtokenNew = localstorage.getItem('token')
         // if(!oldtoken) return errorResponse(res, 400, "You are not sign in")

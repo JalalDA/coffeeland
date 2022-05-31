@@ -294,6 +294,24 @@
 }
 
 @media screen and (max-width : 768px) {
+    .headerContainer{
+        background-image: url(/coffeeland-client/assets/img/robert-bye-95vx5QVl9x4-unsplash\ 2.png);
+        background-size: cover;
+        -webkit-background-size: cover ;
+    }
+    .headerContainer::before{
+        content: "";
+        background: #000;
+        position: absolute;
+        opacity: 100%;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .forgotPassword{
+        color: #FFFFFF;
+    }
     .img{
         display: none;
     }
@@ -334,6 +352,15 @@
         align-items: center;
         justify-content: space-around;
         margin: 0px;
+    }
+    .textLogo{
+        color: #FFFFFF;
+    }
+    .inputLabel{
+        color: #ffffff;
+    }
+    .loginText{
+        color: #ffffff;
     }
 }
 @media screen and (max-width: 425px) {

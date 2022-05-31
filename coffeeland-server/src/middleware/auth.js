@@ -20,6 +20,7 @@ const chekDuplicateEmail = (req, res, next)=>{
 
 const verifyToken = (req, res, next)=>{
     const bearerToken = req.header('Authorization')
+    console.log(bearerToken);
     if(!bearerToken) return res.status(403).json({
         msg : "You need to sign in"
     })

@@ -26,15 +26,22 @@ const favoritProduct = (query)=>{
 
 const searchProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-       let {name, order, sort, category_id, page = 1, limit = 3  } = query
+    let {name, order, sort, category_id, page = 1, limit = 3  } = query
         let arr = []
-        let sqlQuery = "select * from products "
+        let sqlQuery = "select * from products"
+        if(name === ''){
+            sqlQuery = "select * from products"
+        }
         if(name){
             sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%')`
             arr.push(name)
         }
-        if(category_id){
-            sqlQuery += ` and category_id = $${arr.length + 1}`
+        if(name && category_id){
+            sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%') and category_id = $${arr.length + 2}`
+            arr.push(name, category_id)
+        }
+        if(!name && category_id){
+            sqlQuery += ` where category_id = $${arr.length + 1}`
             arr.push(category_id)
         }
         if(order){

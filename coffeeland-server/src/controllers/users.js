@@ -61,15 +61,17 @@ const getAllUser = async (req, res)=>{
 }
 
 const getDetailUserController = (req, res)=>{
-    const id = req.params.id
+    const id = req.userPayload.id
     getDetailUser(id)
     .then((result)=>{
+        console.log(id);
         res.status(200).json({
             data : result.data,
             err : null
         })
     })
     .catch((err)=>{
+        console.log(id);
         console.log(err);
         res.status(400).json({
             data : [],
@@ -136,7 +138,7 @@ const updateUser = (req, res)=>{
 }
 
 const deleteSingleUser = (req, res)=>{
-    const id = req.params.id
+    const id = req.userPayload.id
     deleteUser(id)
     .then((result)=>{
         res.status(200).json({

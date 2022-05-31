@@ -293,6 +293,30 @@
 }
 
 @media screen and (max-width : 768px) {
+    .inputLabel{
+        color: #FFFFFF;
+    }
+    .loginText{
+        color:#FFFFFF;
+    }
+    .textLogo{
+        color: #FFFFFF;
+    }
+    .headerContainer{
+        background-image: url(/coffeeland-client/assets/img/robert-bye-95vx5QVl9x4-unsplash\ 2.png);
+        background-size: cover 100vh;
+        -webkit-background-size: cover ;
+    }
+    .headerContainer::before{
+        content: "";
+        background: #000;
+        position: absolute;
+        opacity: 100%;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
 
     .loginHeader{
         display: flex;
