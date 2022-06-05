@@ -58,7 +58,10 @@ const getDetailTransaction = (req, res) =>{
 }
 
 const insertTransaction = (req, res)=>{
-    createTransaction(req.body).then((result)=>{
+    const id = req.userPayload.id
+    const user_name = req.userPayload.display_name
+    createTransaction(req.body, user_name, id).then((result)=>{
+        
         res.status(200).json({
             data : result.data,
             err : null

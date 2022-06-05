@@ -64,9 +64,29 @@ const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
         const timeStamp = new Date(Date.now())
+        const { email, phone, role} = body
+        const sqlQuery = "INSERT INTO users (id, email, password, phone,created_at) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
+        db.query(sqlQuery, [id, email, hashPassword, phone, timeStamp])
+        .then((result)=>{
+            const response = {
+                data : result.rows[0],
+                err : null
+            }
+            resolve(response)
+        }).catch((err)=>{
+            console.log(err);
+            reject(err)
+        })
+    })
+}
+
+const createUser = (body, hashPassword)=>{
+    return new Promise((resolve, reject)=>{
+        const id = uuidv4()
+        const timeStamp = new Date(Date.now())
         const { display_name, email, phone, role} = body
-        const sqlQuery = "INSERT INTO users (id, display_name, email, password, phone, created_at, role) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING display_name, email, phone"
-        db.query(sqlQuery, [id, display_name, email, hashPassword, phone, timeStamp, role])
+        const sqlQuery = "INSERT INTO users (id, display_name, email, password, phone) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
+        db.query(sqlQuery, [id, display_name, email, hashPassword, phone])
         .then((result)=>{
             const response = {
                 data : result.rows[0],
@@ -78,6 +98,7 @@ const SignUp = (body, hashPassword)=>{
         })
     })
 }
+
 
 const getUserByEmail = (email)=>{
     return new Promise((resolve, reject)=>{
@@ -147,5 +168,6 @@ module.exports = {
     deleteUser,
     getUserByEmail,
     getPassByEmail,
-    updateUserUpload
+    updateUserUpload,
+    createUser,
 }

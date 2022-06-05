@@ -3,7 +3,7 @@ const {succesResponse, errorResponse} = require('../helpers/response')
 const {db} = require('../config/db')
 
 const userModels = require('../models/users')
-const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser, updateUserUpload} = userModels
+const {getAllUsers, getDetailUser, SignUp, editUser, deleteUser, updateUserUpload, createUser} = userModels
 
 const editUserUpload = async (req, res)=>{
     try {
@@ -80,13 +80,13 @@ const getDetailUserController = (req, res)=>{
     })
 }
 
-const Register = async (req, res)=>{
+const createNewUser = async (req, res)=>{
     try {
         const password = req.body.password
         const salt = await bcrypt.genSalt()
         const hashPassword = await bcrypt.hash(password, salt)
-        const result = await SignUp(req.body, hashPassword)
-        succesResponse(res, 200, "Register Succes!!!", result.data)
+        const result = await createUser(req.body, hashPassword)
+        succesResponse(res, 200, "Register Succes!!!")
     } catch (error) { 
         console.log(error);
         res.status(400).json({
@@ -156,8 +156,8 @@ const deleteSingleUser = (req, res)=>{
 module.exports = {
     getAllUser,
     getDetailUserController,
-    Register,
     updateUser,
     deleteSingleUser,
-    editUserUpload
+    editUserUpload,
+    createNewUser
 }

@@ -13,10 +13,9 @@ const Register = async (req, res)=>{
         const hashPassword = await bcrypt.hash(password, salt)
         const data = await SignUp(req.body, hashPassword)
         succesResponse(res, 200, "Register Succes!!!", data)
-        console.log(salt);
     } catch (error) {
-        console.log(error);
-        errorResponse(res, 400, "Register failed")
+        console.log(err);
+        errorResponse(res, 400, "Register failed", error)
     }
 }
 

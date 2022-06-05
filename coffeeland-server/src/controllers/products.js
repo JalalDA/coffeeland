@@ -20,19 +20,22 @@ const getFavoritProduct = async (req, res)=>{
         const totalpage = Math.ceil(Number(total_product)/Number(limit))
         console.log(totalpage);
         if(totalpage === curentPage) {
-            nextPage = `This is the last page`
+            nextPage = null
         }
         if(curentPage === 1 ){
-            previousPage = `This is the first page`
+            previousPage = null
         }
-        res.status(200).json({
-            msg : "Show favorit product",
+        const meta = {
             total_product,
             totalpage,
             curentPage,
             nextPage,
             previousPage,
+        }
+        res.status(200).json({
+            msg : "Show favorit product",
             data : result.data,
+            meta
         })
         // succesResponse(res, 400, "Show favorit product", result, total_product)
     } catch (error) {
@@ -76,18 +79,21 @@ const findProduct = async (req, res) =>{
         let nextPage = `/product/${replaceMagicNext}`
         let previousPage = `/product/${replaceMagicNextPrev}`
         if(curentPage === totalPage){
-            nextPage = `This is the last page`
+            nextPage = null
         }
         if(curentPage === 1){
-            previousPage = `This is the first page`
+            previousPage = null
         }
-        res.status(200).json({
-            msg : `Result for search ${searchName}`,
+        const meta = {
             totalProduct,
             totalPage,
             curentPage,
             nextPage,
             previousPage,
+        }
+        res.status(200).json({
+            msg : `Result for search ${searchName}`,
+            meta,
             dataProduct,
         })
         // succesResponse(res, 200, `Result for search ${searchName}`, result.data)
@@ -124,20 +130,24 @@ const getAllProducts = async (req, res)=>{
         const {total_product} = data.rows[0]
         const totalpage = Math.ceil(Number(total_product)/Number(limit))
         if(totalpage === curentPage) {
-            nextPage = `This is the last page`
+            nextPage = null
         }
         if(curentPage === 1 ){
-            previousPage = `This is the first page`
+            previousPage = null
         }
-        res.status(200).json({
-            msg : "Show all product",
-            total_product : Number(total_product),
+        const meta = {
             totalpage,
             curentPage,
             nextPage,
             previousPage,
-            data : result.data
+        }
+        res.status(200).json({
+            msg : "Show all product",
+            total_product : Number(total_product),
+            data : result.data,
+            meta
         })
+
     } catch (error) {
         errorResponse(res, 400, 'Cannot get All product', error)    
     }
