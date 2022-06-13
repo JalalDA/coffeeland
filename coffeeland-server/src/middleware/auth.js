@@ -36,7 +36,6 @@ const verifyToken = (req, res, next)=>{
             msg : 'You are logged out'
         })
         req.userPayload = payload
-        console.log(req.userPayload);
         next()
     })
 }

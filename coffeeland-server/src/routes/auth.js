@@ -6,7 +6,7 @@ const {chekDuplicateEmail, verifyToken} = require('../middleware/auth')
 
 Router.post('/login', authController.Login)
 Router.post('/register', chekDuplicateEmail , authController.Register)
-Router.patch('/logout', authController.Logout)
+Router.delete('/logout', verifyToken, authController.Logout)
 // (req,res)=>{
 //     req._
 // }

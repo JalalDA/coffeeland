@@ -40,9 +40,9 @@ const getSingelTransaction = (id)=>{
 const createTransaction = (body, user_name, user_id)=>{
     return new Promise ((resolve, reject)=>{
         const id = uuidv4()
-        const {product_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method } = body
-        const sqlQuery = "INSERT INTO transactions(id, product_name, user_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *"
-        const arr = [id, product_name, user_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method, user_id]
+        const {product_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method, product_image} = body
+        const sqlQuery = "INSERT INTO transactions(id, product_name, user_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method, user_id, product_image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *"
+        const arr = [id, product_name, user_name, address, time_transaction, promo_code, delivery_cost, tax, total_payment, paymentmethod, delivery_method, user_id, product_image]
         db.query(sqlQuery, arr)
         .then((result)=>{
             const response = {

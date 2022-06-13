@@ -58,25 +58,35 @@ const getFavoritProduct = async (req, res)=>{
 
 const findProduct = async (req, res) =>{
     try {
+
         const result = await searchProduct(req.query)
+        const {total, limit, data} = result
+        let magic = ''
+        if(req.query){
+            magic += req._parsedUrl.search
+        }
         const searchName = req.query.name
-        const dataProduct = result.data
-        const totalSearch =  await db.query("select count(*) as total_data from products where lower(name) like lower ('%' || $1 || '%')", [searchName])
-        const limit = result.limit
-        const {total_data} = totalSearch.rows[0]
-        const totalProduct = Number(total_data)
+        // const totalSearch =  await db.query("select count(*) as total_data from products where lower(name) like lower ('%' || $1 || '%')", [searchName])
+        
+        const totalProduct = Number(total)
         const totalPage = Math.ceil(totalProduct/Number(limit))
         const {page} = req.query
         let curentPage = Number(page)
         if(!curentPage){
             curentPage = 1
         }
-        const magic = req._parsedUrl.search
         const pageNext = curentPage + 1
         const pagePrev = curentPage - 1
-        const replaceMagicNext = magic.replace(`page=${curentPage}`, `page=${pageNext}`)
+        let replaceMagicNext = magic.replace(`page=${curentPage}`, `page=${pageNext}`).replace('?', '&')
         const replaceMagicNextPrev = magic.replace(`page=${curentPage}`, `page=${pagePrev}`)
-        let nextPage = `/product/${replaceMagicNext}`
+        // if(!magic){
+        //     nextPage = `/product/?page=${curentPage + 1}`
+        // }
+        // console.log(replaceMagicNext);
+        if(replaceMagicNext === 'null'){
+            replaceMagicNext = ''
+        }
+        let nextPage = `/product/?page=${curentPage + 1}${replaceMagicNext}`
         let previousPage = `/product/${replaceMagicNextPrev}`
         if(curentPage === totalPage){
             nextPage = null
@@ -94,7 +104,7 @@ const findProduct = async (req, res) =>{
         res.status(200).json({
             msg : `Result for search ${searchName}`,
             meta,
-            dataProduct,
+            data
         })
         // succesResponse(res, 200, `Result for search ${searchName}`, result.data)
     } catch (error) {

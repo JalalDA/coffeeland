@@ -14,7 +14,7 @@ const Register = async (req, res)=>{
         const data = await SignUp(req.body, hashPassword)
         succesResponse(res, 200, "Register Succes!!!", data)
     } catch (error) {
-        console.log(err);
+        console.log(error);
         errorResponse(res, 400, "Register failed", error)
     }
 }
@@ -33,8 +33,8 @@ const Login = async (req, res)=>{
         })
         console.log(data);
         localstorage.setItem(`token${data.id}`, token)
-        const {photo} = data
-        succesResponse(res, 200, "Login Succes", {photo, token})
+        const {photo, role} = data
+        succesResponse(res, 200, "Login Succes", {photo, role, token})
     } catch (error) {
         console.log(error);
         errorResponse(res, 400, "Login Failed", {error})

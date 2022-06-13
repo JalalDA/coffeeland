@@ -3,13 +3,20 @@ const {db} = require('../config/db')
 
 const favoritProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-        let {page, limit} = query
+        let {page, limit, order} = query
+        
         if(!page) {page = 1}
-        if(!limit) {limit = 3}
-        const offset = (Number(page)-1) * Number(limit)
-        const sqlQuery = "SELECT name, price, pictures, count(*) as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by count(*) desc limit $1 offset $2"
+        if(!limit) {limit = 12}
 
-        db.query(sqlQuery, [limit, offset]).then((result)=>{
+        const offset = (Number(page)-1) * Number(limit)
+        const arr = [limit, offset]
+        let sqlQuery = "SELECT name, price, pictures, count(*) over() as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by count(*) desc limit $1 offset $2"
+        if(order){
+            sqlQuery = `SELECT name, price, pictures, count(*) as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by $${arr.length+1} desc limit $1 offset $2`
+            arr.push(order)
+        }
+        console.log(arr);
+        db.query(sqlQuery, arr).then((result)=>{
             const response = {
                 limit,
                 total : result.rowCount,
@@ -26,61 +33,28 @@ const favoritProduct = (query)=>{
 
 const searchProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-    let {name, order, sort, category_id, page = 1, limit = 3  } = query
+    let {name, order='desc', sort='created_at', category_id, page = 1, limit = 12  } = query
         let arr = []
-        let sqlQuery = "select * from products"
-        if(name === ''){
-            sqlQuery = "select * from products"
+        let sqlQuery = "select count(*) over() as total, products.id, products.name, products.price, products.pictures from products"
+        if(!name && !category_id){
+            sqlQuery += ` order by ${sort} desc`
         }
-        if(name){
-            sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%')`
+        if(name && !category_id){
+            sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%') order by ${sort} ${order}`
             arr.push(name)
         }
-        if(name && category_id){
-            sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%') and category_id = $${arr.length + 2}`
-            arr.push(name, category_id)
-        }
         if(!name && category_id){
-            sqlQuery += ` where category_id = $${arr.length + 1}`
+            sqlQuery += ` where category_id = $${arr.length + 1} order by ${sort} ${order}`
             arr.push(category_id)
         }
-        if(order){
-            if(sort === "price"){
-                sqlQuery += ` order by price`
-            }
-            if(sort === "created_at"){
-                sqlQuery += ` order by created_at`
-            }
-            if(order === "asc"){
-                sqlQuery += ` asc`
-            }
-            if(order === "desc"){
-                sqlQuery += ` desc`
-            }
-            // sqlQuery += " order by " + sort + " " + order
-        }
-        if(!sort){
-            sqlQuery += ` order by created_at`
-        }
-        if(!order){
-            sqlQuery += ` asc`
-        }
-        if(!page){
-            page += 1
-        }
-        if(!limit){
-            limit += 2
-        }
-        if(page){
-            
-            sqlQuery += ` limit $${arr.length + 1}`
-            arr.push(limit)
+        if(name && category_id){
+            sqlQuery +=` where lower (name) like lower ('%' || $${arr.length + 1} || '%') and category_id = $${arr.length+2}`
+            arr.push(name, category_id)
         }
         const offset = (Number(page-1)) * limit
         if(limit){
-            
-            sqlQuery += ` offset $${arr.length + 1}`
-            arr.push(offset)
+            sqlQuery += ` limit $${arr.length+1} offset $${arr.length + 2}`
+            arr.push(limit, offset)
         }
         db.query(sqlQuery, arr).then((result)=>{
             const response = {
@@ -88,13 +62,14 @@ const searchProduct = (query)=>{
                 sort,
                 order,
                 category_id,
-                total : result.rowCount,
+                total : result.rows[0].total,
                 data : result.rows,
                 err : null
             }
             resolve(response)
         }).catch((err)=>{
             console.log(err);
+            console.log(sqlQuery);
             reject(err)
         })
     })
