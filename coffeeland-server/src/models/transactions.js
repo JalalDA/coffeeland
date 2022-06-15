@@ -94,10 +94,28 @@ const deleteTransaction = (id)=>{
     })
 }
 
+const getDailyReport = ()=>{
+    return new Promise((resolve, reject)=>{
+        const sqlQuery = "select date(time_transaction), sum(total_payment) revenue from transactions t where time_transaction > now() - interval '1 week' group by time_transaction"
+        db.query(sqlQuery)
+        .then(result=>{
+            const response = {
+                msg : 'Show Daily Report',
+                data : result.rows,
+            }
+            resolve(response)
+        })
+        .catch(err=>{
+            reject(err)
+        })
+    })
+}
+
 module.exports = {
     getAllTransaction,
     createTransaction,
     updateTransaction,
     getSingelTransaction,
-    deleteTransaction
+    deleteTransaction,
+    getDailyReport
 }

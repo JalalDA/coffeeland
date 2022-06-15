@@ -1,7 +1,28 @@
 const {db} = require('../config/db')
 const modelsTransaction = require('../models/transactions')
-const {getAllTransaction, createTransaction, updateTransaction, getSingelTransaction, deleteTransaction} = modelsTransaction
+const {
+    getAllTransaction, 
+    createTransaction, 
+    updateTransaction, 
+    getSingelTransaction, 
+    deleteTransaction,
+    getDailyReport,
+} = modelsTransaction
 
+const getDailyRevenue = async (req, res)=>{
+    try {
+        const result = await getDailyReport()
+        res.status(200).json({
+            data : result.data,
+            msg : result.msg
+        })
+    } catch (error) {
+        res.status(400).json({
+            msg : `Cannot get report`,
+            data : error
+        })
+    }
+}
 
 const getAllTransactions = async (req, res)=>{
     try {
@@ -111,5 +132,6 @@ module.exports ={
     insertTransaction,
     editTransaction,
     getDetailTransaction,
-    deleteTransactionById
+    deleteTransactionById,
+    getDailyRevenue
 }

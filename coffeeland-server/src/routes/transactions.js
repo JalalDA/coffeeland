@@ -5,6 +5,7 @@ const transactionController = require('../controllers/transactions')
 const {verifyTokenAmdin, verifyToken} = require('../middleware/auth')
 
 Router.get('/all', verifyTokenAmdin, transactionController.getAllTransactions)
+Router.get('/dailyreport', transactionController.getDailyRevenue)
 Router.get('/:id', verifyToken, transactionController.getDetailTransaction)
 Router.post('/', verifyToken, transactionController.insertTransaction)
 Router.patch('/:id', verifyToken, transactionController.editTransaction)
