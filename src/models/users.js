@@ -64,7 +64,7 @@ const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
         const timeStamp = new Date(Date.now())
-        const { email, phone, role} = body
+        const { email, phone} = body
         const sqlQuery = "INSERT INTO users (id, email, password, phone,created_at) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
         db.query(sqlQuery, [id, email, hashPassword, phone, timeStamp])
         .then((result)=>{
@@ -83,8 +83,7 @@ const SignUp = (body, hashPassword)=>{
 const createUser = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
-        const timeStamp = new Date(Date.now())
-        const { display_name, email, phone, role} = body
+        const { display_name, email, phone} = body
         const sqlQuery = "INSERT INTO users (id, display_name, email, password, phone) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
         db.query(sqlQuery, [id, display_name, email, hashPassword, phone])
         .then((result)=>{
@@ -116,7 +115,6 @@ const getPassByEmail = async(email)=>{
         const result = await db.query('SELECT id, display_name, password, photo, role FROM users WHERE email = $1', [email])
         if(result.rowCount === 0) throw {status : 400, err : {msg : "email is not registered"}}
         return result.rows[0]
-        console.log(result);
     } catch (error) {
         throw {error}
     }
