@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
+const cloudinaryConfig = require('./src/config/cloudinary')
+
 
 const {db} = require('./src/config/db')
 db.connect()
@@ -15,6 +17,7 @@ const App = express();
         App.use(express.json())
         App.use(express.urlencoded({extended:false}))
         App.use(cors())
+        App.use(cloudinaryConfig)
         App.use(mainRouter)
         App.listen(port, ()=>{
             console.log(`Connected at port ${port}`);

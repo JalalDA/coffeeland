@@ -1,27 +1,37 @@
 const multer = require('multer')
 const path = require('path')
-
-const storageUsers = multer.diskStorage({
-    destination : (req, file, cb)=>{
-        cb(null, './public/users/images')
+const {CloudinaryStorage} = require('multer-storage-cloudinary')
+const cloudinary = require('cloudinary').v2
+const storage = new  CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'coffeeland',
+    //   format: async (req, file) => 'png', // supports promises as well
+    //   public_id: (req, file) => 'computed-filename-using-request',
     },
-    filename : (req, file, cb)=>{
-        const suffix = `${Date.now()}`
-        const filename = `${file.fieldname}-${suffix}${path.extname(file.originalname)}`
-        cb(null, filename)
-    }
-})
+  });
 
-const storageProduct = multer.diskStorage({
-    destination : (req, file, cb)=>{
-        cb(null, './public/products/images')
-    },
-    filename : (req, file, cb)=>{
-        const suffix = `${Date.now()}`
-        const filename = `product-${file.fieldname}-${suffix}${path.extname(file.originalname)}`
-        cb(null, filename)
-    }
-})
+// const storageUsers = multer.diskStorage({
+//     destination : (req, file, cb)=>{
+//         cb(null, './public/users/images')
+//     },
+//     filename : (req, file, cb)=>{
+//         const suffix = `${Date.now()}`
+//         const filename = `${file.fieldname}-${suffix}${path.extname(file.originalname)}`
+//         cb(null, filename)
+//     }
+// })
+
+// const storageProduct = multer.diskStorage({
+//     destination : (req, file, cb)=>{
+//         cb(null, './public/products/images')
+//     },
+//     filename : (req, file, cb)=>{
+//         const suffix = `${Date.now()}`
+//         const filename = `product-${file.fieldname}-${suffix}${path.extname(file.originalname)}`
+//         cb(null, filename)
+//     }
+// })
 
 const limit = {
     fileSize : 3e6
@@ -36,13 +46,13 @@ const imageOnlyFilter = (req, file, cb)=>{
 }
 
 const uploadUsers = multer({
-    storage : storageUsers,
+    storage : storage,
     limits : limit,
     filefilter : imageOnlyFilter 
 })
 
 const uploadProducts = multer({
-    storage : storageProduct,
+    storage : storage,
     limits : limit,
     fileFilter : imageOnlyFilter
 })

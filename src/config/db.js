@@ -12,7 +12,7 @@ const db = new Pool({
     // // eslint-disable-next-line no-undef
     // password : process.env.DB_PASS,
     // // eslint-disable-next-line no-undef
-    // port : process.env.DB_PORT
+    // port : process.env.DB_PORT,
     // eslint-disable-next-line no-undef
     connectionString: process.env.DATABASE_URL,
     ssl: {
