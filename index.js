@@ -17,7 +17,9 @@ const App = express();
         App.use(express.json())
         App.use(express.urlencoded({extended:false}))
         App.use(cors({
-            origin : 'http://localhost:3000'
+            origin: ['*', 'http://localhost:3000', 'https://coffeelands-app.netlify.app'],
+            methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
         }))
         App.use(cloudinaryConfig)
         App.use(mainRouter)
