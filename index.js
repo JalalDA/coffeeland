@@ -16,7 +16,9 @@ const App = express();
         App.use(express.static('public'))
         App.use(express.json())
         App.use(express.urlencoded({extended:false}))
-        App.use(cors())
+        App.use(cors({
+            origin : ['http://localhost:3000']
+        }))
         App.use(cloudinaryConfig)
         App.use(mainRouter)
         App.listen(port, ()=>{
