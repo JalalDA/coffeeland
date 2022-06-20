@@ -149,7 +149,7 @@ const updateProduct = (id, file, body)=>{
         // const pictures = file? file.path.replace('public', '').replace(/\\/g, '/') : null
         const updated_at = new Date(Date.now())
         const {name, descriptions, price, category_id, sizes} = body
-        const sqlQuery = "UPDATE products SET name = COALESCE(NULLIF($2, ''), name), descriptions = COALESCE(NULLIF($3, ''), descriptions),  price = COALESCE(NULLIF($4, '')::money, price), pictures = COALESCE(NULLIF($5, ''), pictures), category_id = COALESCE(NULLIF($6, ''), category_id), sizes = COALESCE(NULLIF($7, ''), sizes), updated_at = COALESCE(NULLIF($8, '')::timestamp, updated_at) WHERE id = $1 RETURNING*"
+        const sqlQuery = "UPDATE products SET name = COALESCE(NULLIF($2, ''), name), descriptions = COALESCE(NULLIF($3, ''), descriptions),  price = COALESCE(NULLIF($4, '')::integer, price), pictures = COALESCE(NULLIF($5, ''), pictures), category_id = COALESCE(NULLIF($6, ''), category_id), sizes = COALESCE(NULLIF($7, ''), sizes), updated_at = COALESCE(NULLIF($8, '')::timestamp, updated_at) WHERE id = $1 RETURNING*"
         db.query(sqlQuery, [id, name, descriptions, price, pictures, category_id, sizes, updated_at])
         .then((result)=>{
             const response = {
