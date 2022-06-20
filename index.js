@@ -7,7 +7,7 @@ const cloudinaryConfig = require('./src/config/cloudinary')
 const {db} = require('./src/config/db')
 db.connect()
 // eslint-disable-next-line no-undef
-const port = process.env.PORT
+const port = process.env.PORT || 8000
 const App = express();
 
     db.connect().then(()=>{
