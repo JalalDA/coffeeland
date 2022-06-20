@@ -65,10 +65,9 @@ const getDetailUser = (id)=>{
 const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
-        const timeStamp = new Date(Date.now())
         const { email, phone} = body
-        const sqlQuery = "INSERT INTO users (id, email, password, phone,created_at) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
-        db.query(sqlQuery, [id, email, hashPassword, phone, timeStamp])
+        const sqlQuery = "INSERT INTO users (id, email, password, phone) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
+        db.query(sqlQuery, [id, email, hashPassword, phone])
         .then((result)=>{
             const response = {
                 data : result.rows[0],
