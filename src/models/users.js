@@ -4,9 +4,10 @@ const {db} = require('../config/db')
 const updateUserUpload = (id, file, body )=>{
     return new Promise((resolve, reject)=>{
         const {display_name, phone, email, firstname, lastname, birthday, gender, delivery_adress} = body
-        let photo = file? file.path.replace('public', '').replace(/\\/g, '/') : null
+        // let photo = file? file.path.replace('public', '').replace(/\\/g, '/') : null
+        const photo = file? file.path : null
         const updated_at = new Date(Date.now())
-        const sqlQuery = "UPDATE users SET display_name = COALESCE(NULLIF($2, ''), display_name), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender), updated_at = COALESCE(NULLIF($10, '')::timestamp, updated_at), delivery_adress = COALESCE(NULLIF($11, ''), delivery_adress)  WHERE id = $1 RETURNING display_name, phone, email, photo, firstname, lastname, birthday, gender, updated_at, delivery_adress"
+        const sqlQuery = "UPDATE users SET display_name = COALESCE(NULLIF($2, ''), display_name), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender), updated_at = COALESCE(NULLIF($10, '')::timestamp, updated_at), delivery_adress = COALESCE(NULLIF($11, ''), delivery_adress)  WHERE id = $1 RETURNING display_name, phone, email, photo, firstname, lastname, birthday, gender, updated_at, delivery_adress returning *"
         db.query(sqlQuery, [id, display_name, phone, email, photo, firstname, lastname, birthday, gender, updated_at, delivery_adress]).then((result)=>{
             console.log(photo);
             const response = {
@@ -47,8 +48,9 @@ const getDetailUser = (id)=>{
         const sqlQuery = 'SELECT id, display_name, phone, email, photo, firstname, lastname, birthday, gender, delivery_adress FROM users WHERE id = $1'
         db.query(sqlQuery, [id])
         .then((result)=>{
+            console.log(result);
             const response = {
-                data : result.rows,
+                data : result.rows[0],
                 err : null
             }
             resolve(response)
@@ -121,9 +123,10 @@ const getPassByEmail = async(email)=>{
 }
 
 
-const editUser = (id, body)=>{
+const editUser = (id, file, body)=>{
     return new Promise((resolve, reject)=>{
-        const {display_name, phone, email, photo, firstname, lastname, birthday, gender} = body
+        const photo = file? file.path : null
+        const {display_name, phone, email, firstname, lastname, birthday, gender} = body
         const sqlQuery = "UPDATE users SET display_name = COALESCE(NULLIF($2, ''), display_name), phone = COALESCE(NULLIF($3, '')::integer, phone),  email = COALESCE(NULLIF($4, ''), email), photo = COALESCE(NULLIF($5, ''), photo), firstname = COALESCE(NULLIF($6, ''), firstname), lastname = COALESCE(NULLIF($7, ''), lastname), birthday = COALESCE(NULLIF($8, '')::date, birthday), gender = COALESCE(NULLIF($9, ''), gender)  WHERE id = $1 RETURNING displayname, phone, email, photo, firstname, lastname, birthday, gender"
         db.query(sqlQuery, [id, display_name, phone, email, photo, firstname, lastname, birthday, gender])
         .then((result)=>{

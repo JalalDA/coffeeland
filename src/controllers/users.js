@@ -10,6 +10,7 @@ const editUserUpload = async (req, res)=>{
     const id = req.userPayload.id
     const {file = null} = req
     const result = await updateUserUpload(id, file, req.body)
+    console.log(file);
     res.status(200).json({
         msg : result.msg,
         data : result.data
@@ -64,14 +65,13 @@ const getDetailUserController = (req, res)=>{
     const id = req.userPayload.id
     getDetailUser(id)
     .then((result)=>{
-        console.log(id);
+        console.log(result);
         res.status(200).json({
             data : result.data,
             err : null
         })
     })
     .catch((err)=>{
-        console.log(id);
         console.log(err);
         res.status(400).json({
             data : [],
