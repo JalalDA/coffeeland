@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const cloudinaryConfig = require('./src/config/cloudinary')
-
+const mainRouter = require('./src/routes/index') 
 
 const {db} = require('./src/config/db')
 db.connect()
@@ -11,7 +11,6 @@ const port = process.env.PORT || 8000
 const App = express();
 
     db.connect().then(()=>{
-        const mainRouter = require('./src/routes/index') 
         console.log(`Database connected`);
         App.use(express.static('public'))
         App.use(express.json())
