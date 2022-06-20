@@ -66,7 +66,7 @@ const SignUp = (body, hashPassword)=>{
     return new Promise((resolve, reject)=>{
         const id = uuidv4()
         const { email, phone} = body
-        const sqlQuery = "INSERT INTO users (id, email, password, phone) VALUES($1, $2, $3, $4, $5) RETURNING email, phone"
+        const sqlQuery = "INSERT INTO users (id, email, password, phone) VALUES($1, $2, $3, $4) RETURNING email, phone"
         db.query(sqlQuery, [id, email, hashPassword, phone])
         .then((result)=>{
             const response = {
