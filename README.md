@@ -7,7 +7,7 @@
 <br>
 </div>
 
-## 📍 About
+## About
 
 Repository Backend - Coffeeland
 
@@ -18,26 +18,26 @@ Repository Backend - Coffeeland
 - Clone This Repo
 
 ```
-git clone https://github.com/JalalDA/coffeeland.git
+$ git clone https://github.com/JalalDA/coffeeland.git
 ```
 
 - Go To Folder Repo
 
 ```
-cd coffeeland
+$ cd coffeeland
 ```
 
 - Install Module
 
 ```
-npm install
+$ npm install
 ```
 
 - Type `npm start` To Start The Project
 
 <br/>
 
-## ✍️ Coffeeland - Frontend Link
+## Related Project
 
 Link project : [Coffeeland](https://coffeelands-app.netlify.app)
 
