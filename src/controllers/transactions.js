@@ -1,5 +1,6 @@
 const {db} = require('../config/db')
 const modelsTransaction = require('../models/transactions')
+const {createPayment} = require('../config/midtrans')
 const {
     getAllTransaction, 
     createTransaction, 
@@ -78,6 +79,7 @@ const getDetailTransaction = (req, res) =>{
     })
 }
 
+let order_id 
 const insertTransaction = (req, res)=>{
     const id = req.userPayload.id
     const user_name = req.userPayload.display_name

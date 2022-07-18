@@ -4,6 +4,8 @@ const {LocalStorage} = require('node-localstorage')
 const localstorage = new LocalStorage('./cache')
 const {succesResponse, errorResponse} = require('../helpers/response')
 const {SignUp, getPassByEmail} = require('../models/users')
+const nodemailer = require('nodemailer')
+const randomstring = require('randomstring')
 
 
 const Register = async (req, res)=>{
@@ -66,4 +68,42 @@ const Logout = async(req, res)=>{
     }
 }
 
-module.exports = {Register, Login, Logout}
+const ForgotPassword = async (req, res)=>{
+    try {
+        const {email} = req.body
+        const transporter = nodemailer.createTransport({
+            host : process.env.DB_HOST,
+            service : process.env.SERVICE,
+            port : 587,
+            secure : true,
+            auth : {
+                user : process.env.USER,
+                pass : process.env.PASS
+            }
+        })
+        // const result = await getPassByEmail(email)
+        const code = randomstring.generate({
+            length : 6,
+            charset : 'alphanumeric',
+            capitalization : 'uppercase'
+        })
+        await transporter.sendMail({
+            from : 'Coffeeland',
+            to : email,
+            subject : 'Forgot password',
+            text : `Please enter this verification code 
+            
+            ${code}
+            
+            this code will expired in 10 minutes`
+        })
+        localstorage.setItem(`code-${email}, ${code}`)
+        res.status(200).json({
+            msg : 'Email send succesfully'
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {Register, Login, Logout, ForgotPassword}
