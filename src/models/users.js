@@ -113,7 +113,7 @@ const getUserByEmail = (email)=>{
 
 const updatePass = (password, email)=>{
     return new Promise((resolve, reject)=>{
-        const sqlQery = "UPDATE set password = $1 where email = $2"
+        const sqlQery = "UPDATE users set password = $1 where email = $2"
         db.query(sqlQery, [password, email])
         .then(result=>{
             resolve(result)

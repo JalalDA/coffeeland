@@ -4,10 +4,8 @@ const {db} = require('../config/db')
 const favoritProduct = (query)=>{
     return new Promise((resolve, reject)=>{
         let {page, limit, order} = query
-        
         if(!page) {page = 1}
         if(!limit) {limit = 12}
-
         const offset = (Number(page)-1) * Number(limit)
         const arr = [limit, offset]
         let sqlQuery = "SELECT name, price, pictures, count(*) over() as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by count(*) desc limit $1 offset $2"
@@ -24,6 +22,7 @@ const favoritProduct = (query)=>{
                 err : null
             }
             resolve(response)
+            console.log(result.rows);
         }).catch((err)=>{
             console.log(err);
             reject(err)

@@ -32,6 +32,7 @@ const getFavoritProduct = async (req, res)=>{
             nextPage,
             previousPage,
         }
+        console.log(result);
         res.status(200).json({
             msg : "Show favorit product",
             data : result.data,
