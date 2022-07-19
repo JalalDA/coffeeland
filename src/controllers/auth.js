@@ -143,7 +143,9 @@ const resetPassword = async (req, res)=>{
                 msg : "Please input the correct code"
             })
         }
-        const result = await updatePass(newPassword, email)
+        const salt = await bcrypt.genSalt()
+        const hashPassword = await bcrypt.hash(newPassword, salt)
+        const result = await updatePass(hashPassword, email)
         if(result){
             await client.del(`code-${email}`)
         }
