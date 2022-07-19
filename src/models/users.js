@@ -111,6 +111,19 @@ const getUserByEmail = (email)=>{
     })
 }
 
+const updatePass = (password, email)=>{
+    return new Promise((resolve, reject)=>{
+        const sqlQery = "UPDATE set password = $1 where email = $2"
+        db.query(sqlQery, [password, email])
+        .then(result=>{
+            resolve(result)
+        })
+        .catch(err=>{
+            reject(err)
+        })
+    })
+}
+
 const getPassByEmail = async(email)=>{
     try {
         const result = await db.query('SELECT id, display_name, password, photo, role FROM users WHERE email = $1', [email])
@@ -170,4 +183,5 @@ module.exports = {
     getPassByEmail,
     updateUserUpload,
     createUser,
+    updatePass
 }

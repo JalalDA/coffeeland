@@ -8,6 +8,7 @@ Router.post('/login', authController.Login)
 Router.post('/register', chekDuplicateEmail , authController.Register)
 Router.delete('/logout', verifyToken, authController.Logout)
 Router.post('/forgot', authController.ForgotPassword)
+Router.put('/reset', authController.resetPassword)
 // (req,res)=>{
 //     req._
 // }

@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const cloudinaryConfig = require('./src/config/cloudinary')
-const mainRouter = require('./src/routes/index') 
+const mainRouter = require('./src/routes/index')
+const {redisCon} = require('./src/config/redis')
 
 const {db} = require('./src/config/db')
 db.connect()
+redisCon()
 // eslint-disable-next-line no-undef
 const port = process.env.PORT || 8000
 const App = express();
