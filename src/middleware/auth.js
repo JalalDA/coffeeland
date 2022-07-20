@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const {getUserByEmail} = require('../models/users')
 const {LocalStorage} = require('node-localstorage')
 const localstorage = new LocalStorage('./cache')
+const {client} = require('../config/redis')
 
 const chekDuplicateEmail = (req, res, next)=>{
     getUserByEmail(req.body.email)
@@ -31,7 +32,9 @@ const verifyToken = (req, res, next)=>{
         if (err && err.name === "TokenExpiredError") return res.status(401).json({
             msg : "You need to sign in again"
         })
-        const newToken = localstorage.getItem(`token${payload.id}`)
+        console.log(payload.id);
+        const {id} = payload
+        const newToken = client.get(`token${id}`)
         if(oldtoken !== newToken) return res.status(403).json({
             msg : 'You are logged out'
         })

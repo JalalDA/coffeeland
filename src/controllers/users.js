@@ -62,7 +62,7 @@ const getAllUser = async (req, res)=>{
 }
 
 const getDetailUserController = (req, res)=>{
-    const id = req.userPayload.id
+    const {id} = req.userPayload
     getDetailUser(id)
     .then((result)=>{
         console.log(result);

@@ -5,7 +5,7 @@ const userController = require('../controllers/users')
 const {verifyToken, chekDuplicateEmail, verifyTokenAmdin} = require('../middleware/auth')
 const {uploadUsers} = require('../middleware/upload')
 
-Router.get('/all', verifyTokenAmdin, userController.getAllUser)
+Router.get('/all', userController.getAllUser)
 Router.get('/', verifyToken, userController.getDetailUserController)
 Router.post('/', chekDuplicateEmail, userController.createNewUser)
 // Router.patch('/', verifyToken, userController.updateUser)
