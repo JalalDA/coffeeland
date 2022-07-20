@@ -9,6 +9,7 @@ Router.post('/register', chekDuplicateEmail , authController.Register)
 Router.delete('/logout', verifyToken, authController.Logout)
 Router.post('/forgot', authController.ForgotPassword)
 Router.put('/reset', authController.resetPassword)
+Router.delete('/token', authController.deletetoken)
 // (req,res)=>{
 //     req._
 // }

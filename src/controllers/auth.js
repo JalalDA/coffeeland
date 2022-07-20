@@ -160,4 +160,19 @@ const resetPassword = async (req, res)=>{
     }
 }
 
-module.exports = {Register, Login, Logout, ForgotPassword, resetPassword}
+const deletetoken = async (req, res)=>{
+    try {
+        await client.del(`token9a588411-ef6b-4e1b-a8ff-00df5284f6ed`)
+        res.status(200).json({
+            msg : "success delete token"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            err : error,
+            msg : error
+        })
+    }
+}
+
+module.exports = {Register, Login, Logout, ForgotPassword, resetPassword, deletetoken}
