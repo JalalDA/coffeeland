@@ -35,7 +35,8 @@ const Login = async (req, res)=>{
             expiresIn : "1d"
         })
         const {id} = data
-        await client.set(`token${id}`, token)
+        // await client.set(`token${id}`, token)
+        localStorage.setItem(`token${id}`)
         const {photo, role} = data
         succesResponse(res, 200, "Login Succes", {photo, role, token})
     } catch (error) {
@@ -50,14 +51,16 @@ const Logout = async(req, res)=>{
     console.log(bearerToken);
     const oldtoken = bearerToken.split(" ")[1]
     const {id} = req.userPayload
-    const cacheToken = await client.get(`token${id}`)
+    // const cacheToken = await client.get(`token${id}`)
+    const cacheToken = localStorage.getItem(`token${id}`)
     if(!cacheToken){
         return res.status(200).json({
             msg : "You need to sign in"
         })
     }
     if(cacheToken){
-        await client.del(`token${id}`)
+        // await client.del(`token${id}`)
+        localStorage.removeItem(`token${id}`)
     }
     return res.status(200).json({
         msg : "Logout Success"
