@@ -3,7 +3,7 @@ const Router = express.Router()
 const {verifyToken} = require('../middleware/auth')
 const {getHistoryTransaction, deleteHistoryTransaction} = require('../controllers/history')
 
-Router.get('/:id', verifyToken, getHistoryTransaction)
+Router.get('/:id', getHistoryTransaction)
 Router.patch('/delete', deleteHistoryTransaction)
 
 module.exports = Router
