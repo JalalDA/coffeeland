@@ -36,7 +36,7 @@ const Login = async (req, res)=>{
         })
         const {id} = data
         // await client.set(`token${id}`, token)
-        localstorage.setItem(`token${id}`)
+        localstorage.setItem(`token${id}`, token)
         const {photo, role} = data
         succesResponse(res, 200, "Login Succes", {photo, role, token})
     } catch (error) {
