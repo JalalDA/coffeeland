@@ -32,9 +32,7 @@ const verifyToken = (req, res, next)=>{
         if (err && err.name === "TokenExpiredError") return res.status(401).json({
             msg : "You need to sign in again"
         })
-        console.log(payload.id);
-        const {id} = payload
-        const newToken = client.get(`token${id}`)
+        const newToken = localstorage.getItem(`token${payload.id}`)
         if(oldtoken !== newToken) return res.status(403).json({
             msg : 'You are logged out'
         })

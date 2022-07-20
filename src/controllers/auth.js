@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-// const {LocalStorage} = require('node-localstorage')
-// const localstorage = new LocalStorage('./cache')
+const {LocalStorage} = require('node-localstorage')
+const localstorage = new LocalStorage('./cache')
 const {succesResponse, errorResponse} = require('../helpers/response')
 const {SignUp, getPassByEmail, updatePass} = require('../models/users')
 const nodemailer = require('nodemailer')
@@ -36,7 +36,7 @@ const Login = async (req, res)=>{
         })
         const {id} = data
         // await client.set(`token${id}`, token)
-        localStorage.setItem(`token${id}`)
+        localstorage.setItem(`token${id}`)
         const {photo, role} = data
         succesResponse(res, 200, "Login Succes", {photo, role, token})
     } catch (error) {
@@ -52,7 +52,7 @@ const Logout = async(req, res)=>{
     const oldtoken = bearerToken.split(" ")[1]
     const {id} = req.userPayload
     // const cacheToken = await client.get(`token${id}`)
-    const cacheToken = localStorage.getItem(`token${id}`)
+    const cacheToken = localstorage.getItem(`token${id}`)
     if(!cacheToken){
         return res.status(200).json({
             msg : "You need to sign in"
@@ -60,7 +60,7 @@ const Logout = async(req, res)=>{
     }
     if(cacheToken){
         // await client.del(`token${id}`)
-        localStorage.removeItem(`token${id}`)
+        localstorage.removeItem(`token${id}`)
     }
     return res.status(200).json({
         msg : "Logout Success"
