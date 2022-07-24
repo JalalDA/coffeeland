@@ -3,7 +3,7 @@ const {getHistory, deleteHistory} = historyModels
 
 const getHistoryTransaction = async(req, res)=>{
     try {
-        const id = req.userPayload.id
+        const {id} = req.userPayload
         const result = await getHistory(id)
         console.log(result.data);
         res.status(200).json({
