@@ -95,7 +95,7 @@ const insertTransaction = (req, res)=>{
     }
     
     createTransaction(req.body, user_name, id).then((result)=>{
-        await notif.send(msg)
+        notif.send(msg)
         res.status(200).json({
             data : result.data,
             err : null

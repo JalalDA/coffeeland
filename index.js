@@ -4,7 +4,7 @@ const cors = require('cors')
 const cloudinaryConfig = require('./src/config/cloudinary')
 const mainRouter = require('./src/routes/index')
 const {redisCon} = require('./src/config/redis')
-
+console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 const {db} = require('./src/config/db')
 db.connect()
 redisCon()
