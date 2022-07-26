@@ -1,6 +1,9 @@
 const {db} = require('../config/db')
 const modelsTransaction = require('../models/transactions')
 const {createPayment} = require('../config/midtrans')
+const { messaging } = require('../config/firebase')
+const notif = messaging()
+
 const {
     getAllTransaction, 
     createTransaction, 
@@ -83,8 +86,16 @@ let order_id
 const insertTransaction = (req, res)=>{
     const id = req.userPayload.id
     const user_name = req.userPayload.display_name
+    const msg = {
+        token : process.env.TOKEN_NOTIF, 
+        notifications : {
+            title : "New Transaction", 
+            message : `User ${user_name} created new transaction`
+        }
+    }
+    
     createTransaction(req.body, user_name, id).then((result)=>{
-        
+        await notif.send(msg)
         res.status(200).json({
             data : result.data,
             err : null
