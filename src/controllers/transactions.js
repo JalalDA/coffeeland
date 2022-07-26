@@ -88,9 +88,9 @@ const insertTransaction = (req, res)=>{
     const user_name = req.userPayload.display_name
     const msg = {
         token : process.env.TOKEN_NOTIF, 
-        notifications : {
+        notification : {
             title : "New Transaction", 
-            message : `User ${user_name} created new transaction`
+            body : `User ${user_name} created new transaction`
         }
     }
     
