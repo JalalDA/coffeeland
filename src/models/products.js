@@ -3,12 +3,11 @@ const {db} = require('../config/db')
 
 const favoritProduct = (query)=>{
     return new Promise((resolve, reject)=>{
-        let {page, limit, order} = query
-        if(!page) {page = 1}
-        if(!limit) {limit = 12}
-        const offset = (Number(page)-1) * Number(limit)
+        // let {page, limit, order} = query
+        // if(!page) {page = 1}
+        // if(!limit) {limit = 12}
+        // const offset = (Number(page)-1) * Number(limit)
         const arr = []
-        let {name} = query
         let sqlQuery = "select p.id, p.name, p.price, p.pictures, p.created_at from products p join categories pc on p.category_id = pc.id join transactions t on p.name = t.product_name group by p.id, p.name, p.price, p.pictures, p.created_at order by count(*) desc"
         // if(order){
         //     sqlQuery = `SELECT name, price, pictures, count(*) as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by $${arr.length+1} desc limit $1 offset $2`
