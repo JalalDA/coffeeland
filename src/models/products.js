@@ -1,7 +1,7 @@
 const {v4 : uuidv4} = require('uuid')
 const {db} = require('../config/db')
 
-const favoritProduct = (query)=>{
+const favoritProduct = ()=>{
     return new Promise((resolve, reject)=>{
         // let {page, limit, order} = query
         // if(!page) {page = 1}

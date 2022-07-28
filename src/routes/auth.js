@@ -10,6 +10,7 @@ Router.delete('/logout', verifyToken, authController.Logout)
 Router.post('/forgot', authController.ForgotPassword)
 Router.put('/reset', authController.resetPassword)
 Router.delete('/token', authController.deletetoken)
+Router.patch('/editpass', authController.editPass)
 // (req,res)=>{
 //     req._
 // }

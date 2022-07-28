@@ -22,6 +22,36 @@ const Register = async (req, res)=>{
     }
 }
 
+const editPass = async (req, res)=>{
+    try {
+        const {email, newPassword, confirmPassword, password} = req.body
+        const data = await getPassByEmail(email)
+        const result = await bcrypt.compare(password, data.password)
+        if(!result) return res.status(400).json({
+            msg : "Sorry, your password is wrong"
+        })
+        if(confirmPassword !== newPassword){
+            return res.status(400).json({
+                msg : "Your new password and confirm password doesn't match"
+            })
+        }
+        if(res){
+            const salt = await bcrypt.genSalt()
+            const hashPassword = await bcrypt.hash(newPassword, salt)
+            await updatePass(hashPassword, email)
+            res.status(200).json({
+                msg : "Update password is success"
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            msg : error.error.msg
+        })
+    }
+}
+
+
 const Login = async (req, res)=>{
     try {
         const {email, password} = req.body
@@ -178,4 +208,4 @@ const deletetoken = async (req, res)=>{
     }
 }
 
-module.exports = {Register, Login, Logout, ForgotPassword, resetPassword, deletetoken}
+module.exports = {Register, Login, Logout, ForgotPassword, resetPassword, deletetoken, editPass}
