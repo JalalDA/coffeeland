@@ -111,6 +111,7 @@ const getUserByEmail = (email)=>{
     })
 }
 
+
 const updatePass = (password, email)=>{
     return new Promise((resolve, reject)=>{
         const sqlQery = "UPDATE users set password = $1 where email = $2"
@@ -124,10 +125,11 @@ const updatePass = (password, email)=>{
     })
 }
 
+
 const getPassByEmail = async(email)=>{
     try {
         const result = await db.query('SELECT id, display_name, password, photo, role FROM users WHERE email = $1', [email])
-        if(result.rowCount === 0) throw {status : 400, err : {msg : "email is not registered"}}
+        if(result.rowCount === 0) throw {msg : "email is not registered"}
         return result.rows[0]
     } catch (error) {
         throw {error}
