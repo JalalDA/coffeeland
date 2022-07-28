@@ -34,16 +34,17 @@ const searchProduct = (query)=>{
     return new Promise((resolve, reject)=>{
     let {name, order='desc', sort='created_at', category_id, page = 1, limit = 12  } = query
         let arr = []
-        let sqlQuery = "select count(*) over() as total, products.id, products.name, products.price, products.pictures from products"
+        // let sqlQuery = "select count(*) over() as total, products.id, products.name, products.price, products.pictures from products"
+        let sqlQuery = "select * from products"
         if(!name && !category_id){
-            sqlQuery += ` order by ${sort} desc`
+            sqlQuery += ` order by ${sort} ${order}`
         }
         if(name && !category_id){
             sqlQuery += ` where lower (name) like lower ('%' || $${arr.length + 1} || '%') order by ${sort} ${order}`
             arr.push(name)
         }
         if(!name && category_id){
-            sqlQuery += ` where category_id = $${arr.length + 1} order by ${sort} ${order}`
+            sqlQuery += ` where category_id=$${arr.length + 1} order by ${sort} ${order}`
             arr.push(category_id)
         }
         if(name && category_id){
