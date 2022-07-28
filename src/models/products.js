@@ -10,11 +10,6 @@ const favoritProduct = (query)=>{
         const arr = []
         let {name} = query
         let sqlQuery = "select p.id, p.name, p.price, p.pictures, p.created_at from products p join categories pc on p.category_id = pc.id join transactions t on p.name = t.product_name group by p.id, p.name, p.price, p.pictures, p.created_at order by count(*) desc"
-
-        if(name){
-            sqlQuery += ` where lower (name) like lower ('%' || $1 || '%')`
-            arr.push(name)
-        }
         // if(order){
         //     sqlQuery = `SELECT name, price, pictures, count(*) as total_buyment FROM products INNER JOIN transactions ON products.name = transactions.product_name group by products.name, products.price, products.pictures order by $${arr.length+1} desc limit $1 offset $2`
         //     arr.push(order)
